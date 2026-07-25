@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  password     String
+  name         String
+  createdAt    DateTime      @default(now())
+  categories   Category[]
+  transactions Transaction[]
+  budgets      Budget[]
+  savingsGoals SavingsGoal[]
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  color        String // hex color for chart & UI
+  icon         String // lucide-react icon name
+  isDefault    Boolean       @default(false)
+  transactions Transaction[]
+  budgets      Budget[]
+
+  @@index([userId])
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  amount      Float
+  description String
+  type        String // "expense" | "income"
+  date        DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([date])
+}
+
+model Budget {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId   String
+  category     Category @relation(fields: [categoryId], references: [id])
+  monthlyLimit Float
+  month        String // format "YYYY-MM"
+
+  @@unique([userId, categoryId, month])
+  @@index([userId])
+}
+
+model SavingsGoal {
+  id            String           @id @default(cuid())
+  userId        String
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  targetAmount  Float
+  currentAmount Float            @default(0)
+  targetDate    DateTime?
+  color         String
+  icon          String
+  createdAt     DateTime         @default(now())
+  deposits      SavingsDeposit[]
+
+  @@index([userId])
+}
+
+model SavingsDeposit {
+  id            String      @id @default(cuid())
+  savingsGoalId String
+  savingsGoal   SavingsGoal @relation(fields: [savingsGoalId], references: [id], onDelete: Cascade)
+  amount        Float
+  date          DateTime
+  note          String?
+
+  @@index([savingsGoalId])
+}
