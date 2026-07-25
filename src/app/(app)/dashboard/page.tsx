@@ -2,12 +2,15 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageLoading } from "@/components/ui/loading";
 import { DynamicIcon } from "@/components/ui/dynamic-icon";
 import { Badge } from "@/components/ui/badge";
 import { AiInsightsWidget } from "@/components/dashboard/ai-insights";
+import { ExportReportModal } from "@/components/reports/export-report-modal";
+import { FileText } from "lucide-react";
 import {
   formatCurrency,
   formatDate,
@@ -46,6 +49,7 @@ import {
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const fetchData = useCallback(async () => {
     try {
@@ -83,14 +87,29 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Page Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
-          Dashboard
-        </h1>
-        <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
-          Here&apos;s your financial overview for this month
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
+            Dashboard
+          </h1>
+          <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
+            Here&apos;s your financial overview for this month
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="md"
+          onClick={() => setIsExportModalOpen(true)}
+        >
+          <FileText className="w-4 h-4" />
+          Export Report
+        </Button>
       </div>
+
+      <ExportReportModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+      />
 
       {/* HiveMind AI Coach Widget */}
       <AiInsightsWidget />

@@ -132,7 +132,7 @@ export function BeeBotChat() {
 
       {/* Chat Drawer Widget */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[92vw] sm:w-[390px] h-[520px] max-h-[80vh] bg-white rounded-3xl shadow-2xl border-2 border-honey-300 flex flex-col overflow-hidden animate-slide-up">
+        <div className="fixed bottom-22 right-3 left-3 sm:left-auto sm:right-6 z-50 w-auto sm:w-[390px] h-[500px] max-h-[75vh] bg-white rounded-3xl shadow-2xl border-2 border-honey-300 flex flex-col overflow-hidden animate-slide-up">
           {/* Header */}
           <div className="bg-hive-900 text-cream px-4 py-3.5 border-b border-honey-400/30 flex items-center justify-between">
             <div className="flex items-center gap-3">

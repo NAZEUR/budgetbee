@@ -30,8 +30,10 @@ import {
   ChevronRight,
   Mail,
   Sparkles,
+  FileText,
 } from "lucide-react";
 import { AiQuickInputModal } from "@/components/transactions/ai-quick-input-modal";
+import { ExportReportModal } from "@/components/reports/export-report-modal";
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -46,6 +48,7 @@ export default function TransactionsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [isSyncingGmail, setIsSyncingGmail] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const handleSyncGmail = async () => {
     setIsSyncingGmail(true);
@@ -194,7 +197,7 @@ export default function TransactionsPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
             Transactions
@@ -203,36 +206,54 @@ export default function TransactionsPage() {
             Track every transaction and keep your money organized
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <Button
             variant="outline"
-            size="md"
+            size="sm"
+            onClick={() => setIsAiModalOpen(true)}
+            className="flex-1 sm:flex-initial justify-center border-honey-400 text-hive-900 bg-honey-100/50 hover:bg-honey-200/60 font-bold"
+          >
+            <Sparkles className="w-4 h-4 text-honey-600 animate-pulse" />
+            AI Quick Add
+          </Button>
+          <Button onClick={openCreateModal} size="sm" className="flex-1 sm:flex-initial justify-center">
+            <Plus className="w-4 h-4" />
+            Add Transaction
+          </Button>
+        </div>
+      </div>
+
+      {/* Action Toolbar */}
+      <div className="flex flex-row flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3.5 rounded-2xl bg-white border border-cream-darker shadow-xs">
+        <div className="flex items-center gap-2">
+          <Button
+            variant={showFilters ? "primary" : "outline"}
+            size="sm"
             onClick={() => setShowFilters(!showFilters)}
           >
             <Filter className="w-4 h-4" />
             Filters
           </Button>
+        </div>
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <Button
-            variant="outline"
-            size="md"
+            variant="ghost"
+            size="sm"
             onClick={handleSyncGmail}
             isLoading={isSyncingGmail}
+            className="px-2.5 sm:px-3 text-xs sm:text-sm"
           >
-            <Mail className="w-4 h-4" />
+            <Mail className="w-4 h-4 text-hive-600" />
             Sync Gmail
           </Button>
           <Button
-            variant="outline"
-            size="md"
-            onClick={() => setIsAiModalOpen(true)}
-            className="border-honey-400 text-hive-900 bg-honey-100/50 hover:bg-honey-200/60 font-bold"
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsExportModalOpen(true)}
+            className="px-2.5 sm:px-3 text-xs sm:text-sm"
           >
-            <Sparkles className="w-4 h-4 text-honey-600 animate-pulse" />
-            AI Quick Add
-          </Button>
-          <Button onClick={openCreateModal} size="md">
-            <Plus className="w-5 h-5" />
-            Add Transaction
+            <FileText className="w-4 h-4 text-hive-600" />
+            Export Report
           </Button>
         </div>
       </div>
@@ -241,6 +262,11 @@ export default function TransactionsPage() {
         isOpen={isAiModalOpen}
         onClose={() => setIsAiModalOpen(false)}
         onSuccess={() => fetchTransactions()}
+      />
+
+      <ExportReportModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
       />
 
       {/* Filters */}
