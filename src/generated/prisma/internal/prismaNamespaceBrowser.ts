@@ -56,7 +56,8 @@ export const ModelName = {
   Transaction: 'Transaction',
   Budget: 'Budget',
   SavingsGoal: 'SavingsGoal',
-  SavingsDeposit: 'SavingsDeposit'
+  SavingsDeposit: 'SavingsDeposit',
+  GmailToken: 'GmailToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -147,6 +148,18 @@ export const SavingsDepositScalarFieldEnum = {
 } as const
 
 export type SavingsDepositScalarFieldEnum = (typeof SavingsDepositScalarFieldEnum)[keyof typeof SavingsDepositScalarFieldEnum]
+
+
+export const GmailTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  expiryDate: 'expiryDate',
+  lastSyncedAt: 'lastSyncedAt'
+} as const
+
+export type GmailTokenScalarFieldEnum = (typeof GmailTokenScalarFieldEnum)[keyof typeof GmailTokenScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -402,7 +402,8 @@ export const ModelName = {
   Transaction: 'Transaction',
   Budget: 'Budget',
   SavingsGoal: 'SavingsGoal',
-  SavingsDeposit: 'SavingsDeposit'
+  SavingsDeposit: 'SavingsDeposit',
+  GmailToken: 'GmailToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -418,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "category" | "transaction" | "budget" | "savingsGoal" | "savingsDeposit"
+    modelProps: "user" | "category" | "transaction" | "budget" | "savingsGoal" | "savingsDeposit" | "gmailToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -866,6 +867,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    GmailToken: {
+      payload: Prisma.$GmailTokenPayload<ExtArgs>
+      fields: Prisma.GmailTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GmailTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GmailTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.GmailTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GmailTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>
+        }
+        findMany: {
+          args: Prisma.GmailTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>[]
+        }
+        create: {
+          args: Prisma.GmailTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>
+        }
+        createMany: {
+          args: Prisma.GmailTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GmailTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.GmailTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>
+        }
+        update: {
+          args: Prisma.GmailTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.GmailTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GmailTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GmailTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.GmailTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.GmailTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGmailToken>
+        }
+        groupBy: {
+          args: Prisma.GmailTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GmailTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GmailTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GmailTokenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -979,6 +1054,18 @@ export const SavingsDepositScalarFieldEnum = {
 export type SavingsDepositScalarFieldEnum = (typeof SavingsDepositScalarFieldEnum)[keyof typeof SavingsDepositScalarFieldEnum]
 
 
+export const GmailTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  expiryDate: 'expiryDate',
+  lastSyncedAt: 'lastSyncedAt'
+} as const
+
+export type GmailTokenScalarFieldEnum = (typeof GmailTokenScalarFieldEnum)[keyof typeof GmailTokenScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1055,6 +1142,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt'
+ */
+export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt[]'
+ */
+export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -1228,6 +1329,7 @@ export type GlobalOmitConfig = {
   budget?: Prisma.BudgetOmit
   savingsGoal?: Prisma.SavingsGoalOmit
   savingsDeposit?: Prisma.SavingsDepositOmit
+  gmailToken?: Prisma.GmailTokenOmit
 }
 
 /* Types for Logging */

@@ -20,6 +20,7 @@ model User {
   transactions Transaction[]
   budgets      Budget[]
   savingsGoals SavingsGoal[]
+  gmailToken   GmailToken?
 }
 
 model Category {
@@ -91,4 +92,14 @@ model SavingsDeposit {
   note          String?
 
   @@index([savingsGoalId])
+}
+
+model GmailToken {
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken  String?
+  refreshToken String
+  expiryDate   BigInt?
+  lastSyncedAt DateTime?
 }

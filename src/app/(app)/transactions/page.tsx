@@ -28,7 +28,10 @@ import {
   Trash2,
   ChevronLeft,
   ChevronRight,
+  Mail,
+  Sparkles,
 } from "lucide-react";
+import { AiQuickInputModal } from "@/components/transactions/ai-quick-input-modal";
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -41,6 +44,32 @@ export default function TransactionsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [filters, setFilters] = useState<TransactionFilter>({});
   const [showFilters, setShowFilters] = useState(false);
+  const [isSyncingGmail, setIsSyncingGmail] = useState(false);
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+
+  const handleSyncGmail = async () => {
+    setIsSyncingGmail(true);
+    try {
+      const res = await fetch("/api/integrations/gmail/sync", { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message || "Synced successfully!");
+        fetchTransactions();
+      } else {
+        if (data.error?.includes("connect")) {
+          if (confirm("Gmail not connected. Connect your Gmail account now?")) {
+            window.location.href = "/api/integrations/gmail/connect";
+          }
+        } else {
+          alert(data.error || "Failed to sync Gmail receipts.");
+        }
+      }
+    } catch {
+      alert("Error syncing Gmail.");
+    } finally {
+      setIsSyncingGmail(false);
+    }
+  };
 
   const {
     register,
@@ -174,7 +203,7 @@ export default function TransactionsPage() {
             Track every transaction and keep your money organized
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             size="md"
@@ -183,12 +212,36 @@ export default function TransactionsPage() {
             <Filter className="w-4 h-4" />
             Filters
           </Button>
+          <Button
+            variant="outline"
+            size="md"
+            onClick={handleSyncGmail}
+            isLoading={isSyncingGmail}
+          >
+            <Mail className="w-4 h-4" />
+            Sync Gmail
+          </Button>
+          <Button
+            variant="outline"
+            size="md"
+            onClick={() => setIsAiModalOpen(true)}
+            className="border-honey-400 text-hive-900 bg-honey-100/50 hover:bg-honey-200/60 font-bold"
+          >
+            <Sparkles className="w-4 h-4 text-honey-600 animate-pulse" />
+            AI Quick Add
+          </Button>
           <Button onClick={openCreateModal} size="md">
             <Plus className="w-5 h-5" />
             Add Transaction
           </Button>
         </div>
       </div>
+
+      <AiQuickInputModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+        onSuccess={() => fetchTransactions()}
+      />
 
       {/* Filters */}
       {showFilters && (

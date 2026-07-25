@@ -47,3 +47,8 @@ export type SavingsGoal = Prisma.SavingsGoalModel
  * 
  */
 export type SavingsDeposit = Prisma.SavingsDepositModel
+/**
+ * Model GmailToken
+ * 
+ */
+export type GmailToken = Prisma.GmailTokenModel

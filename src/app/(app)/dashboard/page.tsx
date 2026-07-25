@@ -7,6 +7,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { PageLoading } from "@/components/ui/loading";
 import { DynamicIcon } from "@/components/ui/dynamic-icon";
 import { Badge } from "@/components/ui/badge";
+import { AiInsightsWidget } from "@/components/dashboard/ai-insights";
 import {
   formatCurrency,
   formatDate,
@@ -90,6 +91,9 @@ export default function DashboardPage() {
           Here&apos;s your financial overview for this month
         </p>
       </div>
+
+      {/* HiveMind AI Coach Widget */}
+      <AiInsightsWidget />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
 import { Sidebar } from "@/components/layout/sidebar";
+import { BeeBotChat } from "@/components/ui/beebot-chat";
 
 export default async function AppLayout({
   children,
@@ -24,6 +25,8 @@ export default async function AppLayout({
             {children}
           </div>
         </main>
+        {/* BeeBot AI Floating Assistant */}
+        <BeeBotChat />
       </div>
     </SessionProvider>
   );
