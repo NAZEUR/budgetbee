@@ -21,25 +21,25 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
   ) => {
     const variants = {
       default: "bg-white border border-cream-darker",
-      honey: "bg-honey-50 border border-honey-200",
+      honey: "bg-honey-50/80 border border-honey-200/80",
       glass: "glass",
     };
 
     const paddings = {
       none: "",
-      sm: "p-4",
-      md: "p-6",
-      lg: "p-8",
+      sm: "p-4 sm:p-5",
+      md: "p-5 sm:p-6",
+      lg: "p-6 sm:p-8",
     };
 
     return (
       <div
         ref={ref}
         className={cn(
-          "rounded-2xl shadow-card",
+          "rounded-3xl shadow-card transition-all duration-200",
           variants[variant],
           paddings[padding],
-          hover && "transition-honey hover:shadow-card-hover hover:-translate-y-0.5 cursor-pointer",
+          hover && "hover:shadow-card-hover hover:-translate-y-0.5 cursor-pointer",
           className
         )}
         {...props}
@@ -65,7 +65,7 @@ const CardTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingEleme
   ({ className, children, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn("text-lg font-bold text-hive-800", className)}
+      className={cn("text-lg sm:text-xl font-extrabold text-hive-800 tracking-tight", className)}
       {...props}
     >
       {children}
@@ -78,7 +78,7 @@ const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLPara
   ({ className, children, ...props }, ref) => (
     <p
       ref={ref}
-      className={cn("text-sm text-hive-400 mt-1", className)}
+      className={cn("text-sm text-hive-400 font-medium mt-1", className)}
       {...props}
     >
       {children}

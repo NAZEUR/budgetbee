@@ -167,24 +167,24 @@ export default function TransactionsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-hive-800">
+          <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
             Transactions
           </h1>
-          <p className="text-sm text-hive-400 mt-1">
-            Track every buzz of your money 💰
+          <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
+            Track every transaction and keep your money organized
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
-            variant="ghost"
-            size="sm"
+            variant="outline"
+            size="md"
             onClick={() => setShowFilters(!showFilters)}
           >
             <Filter className="w-4 h-4" />
             Filters
           </Button>
-          <Button onClick={openCreateModal} size="sm">
-            <Plus className="w-4 h-4" />
+          <Button onClick={openCreateModal} size="md">
+            <Plus className="w-5 h-5" />
             Add Transaction
           </Button>
         </div>
@@ -265,7 +265,7 @@ export default function TransactionsPage() {
       {transactions.length === 0 ? (
         <EmptyState
           title="No transactions yet"
-          description="Start buzzing! Add your first transaction to begin tracking your money. 🐝"
+          description="Add your first transaction to begin tracking your money."
           action={
             <Button onClick={openCreateModal}>
               <Plus className="w-4 h-4" />
@@ -388,7 +388,7 @@ export default function TransactionsPage() {
               "border-cream-darker hover:border-hive-200"
             )}>
               <input type="radio" value="expense" {...register("type")} className="sr-only" />
-              <span className="text-sm font-semibold">💸 Expense</span>
+              <span className="text-sm font-semibold">Expense</span>
             </label>
             <label className={cn(
               "flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-honey",
@@ -396,7 +396,7 @@ export default function TransactionsPage() {
               "border-cream-darker hover:border-hive-200"
             )}>
               <input type="radio" value="income" {...register("type")} className="sr-only" />
-              <span className="text-sm font-semibold">💰 Income</span>
+              <span className="text-sm font-semibold">Income</span>
             </label>
           </div>
 
@@ -459,7 +459,9 @@ export default function TransactionsPage() {
         size="sm"
       >
         <div className="text-center">
-          <div className="text-4xl mb-3">🗑️</div>
+          <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-red-50 flex items-center justify-center border border-red-200">
+            <Trash2 className="w-6 h-6 text-status-danger" />
+          </div>
           <p className="text-sm text-hive-600 mb-6">
             Are you sure you want to delete this transaction? This action cannot
             be undone.

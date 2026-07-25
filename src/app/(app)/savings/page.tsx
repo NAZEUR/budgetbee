@@ -162,15 +162,15 @@ export default function SavingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-hive-800">
+          <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
             Savings Goals
           </h1>
-          <p className="text-sm text-hive-400 mt-1">
-            Build your honey pot, one deposit at a time 🍯
+          <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
+            Build your savings, one deposit at a time
           </p>
         </div>
-        <Button onClick={() => openGoalModal()} size="sm">
-          <Plus className="w-4 h-4" />
+        <Button onClick={() => openGoalModal()} size="md">
+          <Plus className="w-5 h-5" />
           New Goal
         </Button>
       </div>
@@ -209,7 +209,7 @@ export default function SavingsPage() {
       {goals.length === 0 ? (
         <EmptyState
           title="No savings goals yet"
-          description="Create your first savings goal and start building your honey pot! Every little bit counts. 🐝"
+          description="Create your first savings goal and start building your savings! Every little bit counts."
           action={
             <Button onClick={() => openGoalModal()}>
               <Plus className="w-4 h-4" />
@@ -436,7 +436,7 @@ export default function SavingsPage() {
       <Modal
         isOpen={isDepositModalOpen}
         onClose={() => setIsDepositModalOpen(false)}
-        title="Add Deposit 🍯"
+        title="Add Deposit"
         size="sm"
       >
         <form
@@ -496,7 +496,9 @@ export default function SavingsPage() {
         size="sm"
       >
         <div className="text-center">
-          <div className="text-4xl mb-3">😢</div>
+          <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-red-50 flex items-center justify-center border border-red-200">
+            <Trash2 className="w-6 h-6 text-status-danger" />
+          </div>
           <p className="text-sm text-hive-600 mb-6">
             Are you sure you want to delete this savings goal? All deposits will
             also be deleted. This cannot be undone.

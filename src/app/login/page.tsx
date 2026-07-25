@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Mail, Lock } from "lucide-react";
 import { useState } from "react";
 
+import Image from "next/image";
+
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -50,7 +52,15 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <div className="text-5xl mb-3 animate-float">🐝</div>
+            <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-honey-100 p-2.5 flex items-center justify-center border border-honey-200 shadow-honey animate-float">
+              <Image
+                src="/logo_budgetbee.svg"
+                alt="BudgetBee Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
+            </div>
             <h1 className="text-3xl font-extrabold text-hive-800">
               Budget<span className="text-honey-500">Bee</span>
             </h1>

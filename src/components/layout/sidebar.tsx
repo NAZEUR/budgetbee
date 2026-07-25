@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import {
@@ -36,8 +37,16 @@ export function Sidebar({ userName }: SidebarProps) {
     <>
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-b border-cream-darker px-4 py-3 flex items-center justify-between">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="text-2xl">🐝</span>
+        <Link href="/dashboard" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-honey-100 p-1 flex items-center justify-center border border-honey-200">
+            <Image
+              src="/logo_budgetbee.svg"
+              alt="BudgetBee Logo"
+              width={24}
+              height={24}
+              className="w-full h-full object-contain"
+            />
+          </div>
           <span className="text-lg font-extrabold text-hive-800">
             Budget<span className="text-honey-500">Bee</span>
           </span>
@@ -73,8 +82,14 @@ export function Sidebar({ userName }: SidebarProps) {
             className="flex items-center gap-3"
             onClick={() => setIsMobileOpen(false)}
           >
-            <div className="w-10 h-10 rounded-2xl honey-gradient flex items-center justify-center shadow-honey">
-              <span className="text-xl">🐝</span>
+            <div className="w-10 h-10 rounded-2xl bg-honey-100 p-1.5 flex items-center justify-center shadow-honey border border-honey-200">
+              <Image
+                src="/logo_budgetbee.svg"
+                alt="BudgetBee Logo"
+                width={28}
+                height={28}
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h1 className="text-xl font-extrabold text-hive-800 leading-tight">

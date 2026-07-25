@@ -16,14 +16,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={id}
-            className="block text-sm font-semibold text-hive-700 mb-1.5"
+            className="block text-sm font-semibold text-hive-800 mb-1.5 tracking-wide"
           >
             {label}
           </label>
         )}
         <div className="relative">
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-hive-300">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-hive-400 flex items-center justify-center">
               {icon}
             </div>
           )}
@@ -31,10 +31,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={id}
             className={cn(
-              "w-full rounded-xl border border-cream-darker bg-white px-4 py-2.5 text-sm text-hive-800",
-              "placeholder:text-hive-300",
-              "focus:outline-none focus:ring-2 focus:ring-honey-400 focus:border-honey-400",
-              "transition-honey",
+              "w-full rounded-xl border border-cream-darker bg-white px-3.5 py-2.5 text-sm font-semibold text-hive-900 min-h-[40px]",
+              "placeholder:text-hive-300 placeholder:font-normal",
+              "focus:outline-none focus:ring-2 focus:ring-honey-400 focus:border-honey-400 shadow-xs",
+              "transition-all duration-200",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               icon ? "pl-10" : undefined,
               error ? "border-status-danger focus:ring-status-danger" : undefined,
@@ -44,7 +44,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           />
         </div>
         {error && (
-          <p className="mt-1.5 text-xs text-status-danger font-medium">{error}</p>
+          <p className="mt-1.5 text-xs text-status-danger font-bold">{error}</p>
         )}
       </div>
     );

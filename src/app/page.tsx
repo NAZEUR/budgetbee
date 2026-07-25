@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   BarChart3,
@@ -16,8 +17,14 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-cream-darker">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl honey-gradient flex items-center justify-center shadow-honey">
-              <span className="text-lg">🐝</span>
+            <div className="w-9 h-9 rounded-xl bg-honey-100 p-1 flex items-center justify-center shadow-sm border border-honey-200">
+              <Image
+                src="/logo_budgetbee.svg"
+                alt="BudgetBee Logo"
+                width={26}
+                height={26}
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-xl font-extrabold text-hive-800">
               Budget<span className="text-honey-500">Bee</span>
@@ -44,8 +51,16 @@ export default function LandingPage() {
       <section className="relative overflow-hidden honeycomb-bg">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-28 sm:pt-28 sm:pb-36">
           <div className="text-center max-w-3xl mx-auto">
-            {/* Floating bee */}
-            <div className="text-6xl sm:text-7xl mb-6 animate-float">🐝</div>
+            {/* Hero Logo Badge */}
+            <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 rounded-3xl bg-honey-100 p-3.5 flex items-center justify-center border-2 border-honey-200 shadow-honey animate-float">
+              <Image
+                src="/logo_budgetbee.svg"
+                alt="BudgetBee Logo"
+                width={72}
+                height={72}
+                className="w-full h-full object-contain"
+              />
+            </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-hive-800 leading-tight mb-6">
               <span className="text-honey-500">Budget</span>Bee
@@ -106,7 +121,7 @@ export default function LandingPage() {
                 title: "Expense Tracking",
                 description:
                   "Log every transaction with categories, dates, and notes. See exactly where your money goes.",
-                color: "bg-orange-50 text-cat-food",
+                color: "bg-red-50 text-status-danger",
               },
               {
                 icon: Wallet,
@@ -119,7 +134,7 @@ export default function LandingPage() {
                 icon: PiggyBank,
                 title: "Savings Goals",
                 description:
-                  "Create multiple savings goals, track deposits, and watch your honey pot grow! 🍯",
+                  "Create multiple savings goals, track deposits, and watch your savings grow step by step.",
                 color: "bg-emerald-50 text-cat-entertainment",
               },
               {
@@ -168,10 +183,18 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="py-20 honeycomb-bg">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-5xl mb-6">🍯</div>
+          <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-honey-100 p-3 flex items-center justify-center border border-honey-200 shadow-honey">
+            <Image
+              src="/logo_budgetbee.svg"
+              alt="BudgetBee Logo"
+              width={40}
+              height={40}
+              className="w-full h-full object-contain"
+            />
+          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-hive-800 mb-4">
             Ready to Start Building Your{" "}
-            <span className="text-honey-500">Honey Pot</span>?
+            <span className="text-honey-500">Savings</span>?
           </h2>
           <p className="text-hive-400 mb-8 max-w-md mx-auto">
             Join BudgetBee today and take the first step toward smarter money
@@ -191,13 +214,19 @@ export default function LandingPage() {
       <footer className="py-8 bg-hive-800 text-cream">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-lg">🐝</span>
+            <Image
+              src="/logo_budgetbee.svg"
+              alt="BudgetBee Logo"
+              width={20}
+              height={20}
+              className="w-5 h-5 object-contain"
+            />
             <span className="text-sm font-bold">
               Budget<span className="text-honey-400">Bee</span>
             </span>
           </div>
           <p className="text-xs text-hive-300">
-            © {new Date().getFullYear()} BudgetBee. Made with 🍯 for your
+            © {new Date().getFullYear()} BudgetBee. Built for your
             financial wellbeing.
           </p>
         </div>

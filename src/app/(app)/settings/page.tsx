@@ -12,11 +12,11 @@ export default function SettingsPage() {
     <div className="space-y-6 animate-fade-in max-w-2xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-hive-800">
+        <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
           Settings
         </h1>
-        <p className="text-sm text-hive-400 mt-1">
-          Manage your account settings 🔧
+        <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
+          Manage your account settings
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function SettingsPage() {
           </p>
           <p>
             <span className="font-semibold text-hive-700">Tagline:</span> Bee
-            Smart with Your Money 🐝
+            Smart with Your Money
           </p>
           <p className="text-xs text-hive-400 mt-4">
             Track your expenses, build better habits, and watch your savings

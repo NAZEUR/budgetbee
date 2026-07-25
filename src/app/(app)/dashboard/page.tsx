@@ -23,6 +23,10 @@ import {
   PiggyBank,
   ArrowUpRight,
   ArrowDownRight,
+  BarChart3,
+  Target,
+  Receipt,
+  PieChart as PieIcon,
 } from "lucide-react";
 import {
   PieChart,
@@ -79,11 +83,11 @@ export default function DashboardPage() {
     <div className="space-y-6 animate-fade-in">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-hive-800">
+        <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
           Dashboard
         </h1>
-        <p className="text-sm text-hive-400 mt-1">
-          Here&apos;s your financial overview for this month 🐝
+        <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
+          Here&apos;s your financial overview for this month
         </p>
       </div>
 
@@ -192,7 +196,9 @@ export default function DashboardPage() {
           </h3>
           {data.categoryBreakdown.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="text-4xl mb-3">🍯</div>
+              <div className="w-12 h-12 rounded-2xl bg-honey-100 flex items-center justify-center mb-3 border border-honey-200">
+                <PieIcon className="w-6 h-6 text-honey-600" />
+              </div>
               <p className="text-sm text-hive-400">
                 No expenses this month yet. Start tracking!
               </p>
@@ -250,7 +256,9 @@ export default function DashboardPage() {
           </h3>
           {data.monthlyTrend.every((m) => m.expense === 0 && m.income === 0) ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="text-4xl mb-3">📊</div>
+              <div className="w-12 h-12 rounded-2xl bg-honey-100 flex items-center justify-center mb-3 border border-honey-200">
+                <BarChart3 className="w-6 h-6 text-honey-600" />
+              </div>
               <p className="text-sm text-hive-400">
                 No data yet. Add transactions to see trends!
               </p>
@@ -290,7 +298,7 @@ export default function DashboardPage() {
                 <Bar
                   dataKey="expense"
                   name="Expense"
-                  fill="#FF8C42"
+                  fill="#F87171"
                   radius={[6, 6, 0, 0]}
                 />
                 <Bar
@@ -310,11 +318,13 @@ export default function DashboardPage() {
         {/* Savings Goals */}
         <Card>
           <h3 className="text-lg font-bold text-hive-800 mb-4">
-            Savings Goals 🍯
+            Savings Goals
           </h3>
           {data.savingsGoals.length === 0 ? (
-            <div className="text-center py-8">
-              <div className="text-3xl mb-2">🎯</div>
+            <div className="flex flex-col items-center justify-center text-center py-8">
+              <div className="w-10 h-10 rounded-xl bg-honey-100 flex items-center justify-center mb-2 border border-honey-200">
+                <Target className="w-5 h-5 text-honey-600" />
+              </div>
               <p className="text-sm text-hive-400">
                 No savings goals yet. Create one to start saving!
               </p>
@@ -372,8 +382,10 @@ export default function DashboardPage() {
             Recent Transactions
           </h3>
           {data.recentTransactions.length === 0 ? (
-            <div className="text-center py-8">
-              <div className="text-3xl mb-2">📝</div>
+            <div className="flex flex-col items-center justify-center text-center py-8">
+              <div className="w-10 h-10 rounded-xl bg-honey-100 flex items-center justify-center mb-2 border border-honey-200">
+                <Receipt className="w-5 h-5 text-honey-600" />
+              </div>
               <p className="text-sm text-hive-400">
                 No transactions yet. Start buzzing!
               </p>

@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Mail, Lock, User } from "lucide-react";
 import { useState } from "react";
 
+import Image from "next/image";
+
 export default function RegisterPage() {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -51,13 +53,21 @@ export default function RegisterPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <div className="text-5xl mb-3 animate-float">🐝</div>
+            <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-honey-100 p-2.5 flex items-center justify-center border border-honey-200 shadow-honey animate-float">
+              <Image
+                src="/logo_budgetbee.svg"
+                alt="BudgetBee Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
+            </div>
             <h1 className="text-3xl font-extrabold text-hive-800">
               Budget<span className="text-honey-500">Bee</span>
             </h1>
           </Link>
           <p className="text-sm text-hive-400 mt-2">
-            Join the hive and start managing your money! 🍯
+            Join the hive and start managing your money!
           </p>
         </div>
 
@@ -120,7 +130,7 @@ export default function RegisterPage() {
               size="lg"
               isLoading={isSubmitting}
             >
-              Start Buzzing 🐝
+              Start Buzzing
             </Button>
           </form>
         </div>

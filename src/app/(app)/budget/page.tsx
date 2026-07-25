@@ -129,15 +129,15 @@ export default function BudgetPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-hive-800">
+          <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
             Budget
           </h1>
-          <p className="text-sm text-hive-400 mt-1">
-            Set limits and keep your spending on track 🎯
+          <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
+            Set limits and keep your spending on track
           </p>
         </div>
-        <Button onClick={openModal} size="sm" disabled={availableCategories.length === 0}>
-          <Plus className="w-4 h-4" />
+        <Button onClick={openModal} size="md" disabled={availableCategories.length === 0}>
+          <Plus className="w-5 h-5" />
           Set Budget
         </Button>
       </div>
@@ -203,7 +203,7 @@ export default function BudgetPage() {
       {budgets.length === 0 ? (
         <EmptyState
           title="No budgets set"
-          description="Set monthly budgets for your categories to keep track of your spending limits! 📊"
+          description="Set monthly budgets for your categories to keep track of your spending limits."
           action={
             <Button onClick={openModal}>
               <Plus className="w-4 h-4" />

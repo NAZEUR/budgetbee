@@ -2,7 +2,7 @@
 export const DEFAULT_CATEGORIES = [
   {
     name: "Food & Drinks",
-    color: "#FF8C42",
+    color: "#F87171",
     icon: "UtensilsCrossed",
     isDefault: true,
   },
@@ -98,7 +98,7 @@ export const SAVINGS_ICONS = [
 // Available colors for savings goals
 export const SAVINGS_COLORS = [
   "#F0B429",
-  "#FF8C42",
+  "#F87171",
   "#4A90D9",
   "#E85D9C",
   "#8B6FD1",
