@@ -57,7 +57,8 @@ export const ModelName = {
   Budget: 'Budget',
   SavingsGoal: 'SavingsGoal',
   SavingsDeposit: 'SavingsDeposit',
-  GmailToken: 'GmailToken'
+  GmailToken: 'GmailToken',
+  EmailPreference: 'EmailPreference'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -160,6 +161,22 @@ export const GmailTokenScalarFieldEnum = {
 } as const
 
 export type GmailTokenScalarFieldEnum = (typeof GmailTokenScalarFieldEnum)[keyof typeof GmailTokenScalarFieldEnum]
+
+
+export const EmailPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  weeklyRecap: 'weeklyRecap',
+  monthlyRecap: 'monthlyRecap',
+  dayOfWeek: 'dayOfWeek',
+  sendHour: 'sendHour',
+  lastWeeklySent: 'lastWeeklySent',
+  lastMonthlySent: 'lastMonthlySent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmailPreferenceScalarFieldEnum = (typeof EmailPreferenceScalarFieldEnum)[keyof typeof EmailPreferenceScalarFieldEnum]
 
 
 export const SortOrder = {

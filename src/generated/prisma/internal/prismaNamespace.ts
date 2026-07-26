@@ -403,7 +403,8 @@ export const ModelName = {
   Budget: 'Budget',
   SavingsGoal: 'SavingsGoal',
   SavingsDeposit: 'SavingsDeposit',
-  GmailToken: 'GmailToken'
+  GmailToken: 'GmailToken',
+  EmailPreference: 'EmailPreference'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "category" | "transaction" | "budget" | "savingsGoal" | "savingsDeposit" | "gmailToken"
+    modelProps: "user" | "category" | "transaction" | "budget" | "savingsGoal" | "savingsDeposit" | "gmailToken" | "emailPreference"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -941,6 +942,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EmailPreference: {
+      payload: Prisma.$EmailPreferencePayload<ExtArgs>
+      fields: Prisma.EmailPreferenceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmailPreferenceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmailPreferenceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>
+        }
+        findFirst: {
+          args: Prisma.EmailPreferenceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmailPreferenceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>
+        }
+        findMany: {
+          args: Prisma.EmailPreferenceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>[]
+        }
+        create: {
+          args: Prisma.EmailPreferenceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>
+        }
+        createMany: {
+          args: Prisma.EmailPreferenceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EmailPreferenceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>[]
+        }
+        delete: {
+          args: Prisma.EmailPreferenceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>
+        }
+        update: {
+          args: Prisma.EmailPreferenceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>
+        }
+        deleteMany: {
+          args: Prisma.EmailPreferenceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmailPreferenceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EmailPreferenceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>[]
+        }
+        upsert: {
+          args: Prisma.EmailPreferenceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailPreferencePayload>
+        }
+        aggregate: {
+          args: Prisma.EmailPreferenceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmailPreference>
+        }
+        groupBy: {
+          args: Prisma.EmailPreferenceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailPreferenceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmailPreferenceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailPreferenceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1064,6 +1139,22 @@ export const GmailTokenScalarFieldEnum = {
 } as const
 
 export type GmailTokenScalarFieldEnum = (typeof GmailTokenScalarFieldEnum)[keyof typeof GmailTokenScalarFieldEnum]
+
+
+export const EmailPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  weeklyRecap: 'weeklyRecap',
+  monthlyRecap: 'monthlyRecap',
+  dayOfWeek: 'dayOfWeek',
+  sendHour: 'sendHour',
+  lastWeeklySent: 'lastWeeklySent',
+  lastMonthlySent: 'lastMonthlySent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmailPreferenceScalarFieldEnum = (typeof EmailPreferenceScalarFieldEnum)[keyof typeof EmailPreferenceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1330,6 +1421,7 @@ export type GlobalOmitConfig = {
   savingsGoal?: Prisma.SavingsGoalOmit
   savingsDeposit?: Prisma.SavingsDepositOmit
   gmailToken?: Prisma.GmailTokenOmit
+  emailPreference?: Prisma.EmailPreferenceOmit
 }
 
 /* Types for Logging */

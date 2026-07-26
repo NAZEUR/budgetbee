@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  password     String
-  name         String
-  createdAt    DateTime      @default(now())
-  categories   Category[]
-  transactions Transaction[]
-  budgets      Budget[]
-  savingsGoals SavingsGoal[]
-  gmailToken   GmailToken?
+  id              String           @id @default(cuid())
+  email           String           @unique
+  password        String
+  name            String
+  createdAt       DateTime         @default(now())
+  categories      Category[]
+  transactions    Transaction[]
+  budgets         Budget[]
+  savingsGoals    SavingsGoal[]
+  gmailToken      GmailToken?
+  emailPreference EmailPreference?
 }
 
 model Category {
@@ -102,4 +103,18 @@ model GmailToken {
   refreshToken String
   expiryDate   BigInt?
   lastSyncedAt DateTime?
+}
+
+model EmailPreference {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weeklyRecap    Boolean  @default(true)
+  monthlyRecap   Boolean  @default(true)
+  dayOfWeek      Int      @default(1) // 0=Minggu, 1=Senin, ..., 6=Sabtu
+  sendHour       Int      @default(8) // jam pengiriman (0-23)
+  lastWeeklySent DateTime?
+  lastMonthlySent DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

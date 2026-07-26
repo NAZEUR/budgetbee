@@ -187,6 +187,7 @@ export type UserWhereInput = {
   budgets?: Prisma.BudgetListRelationFilter
   savingsGoals?: Prisma.SavingsGoalListRelationFilter
   gmailToken?: Prisma.XOR<Prisma.GmailTokenNullableScalarRelationFilter, Prisma.GmailTokenWhereInput> | null
+  emailPreference?: Prisma.XOR<Prisma.EmailPreferenceNullableScalarRelationFilter, Prisma.EmailPreferenceWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -200,6 +201,7 @@ export type UserOrderByWithRelationInput = {
   budgets?: Prisma.BudgetOrderByRelationAggregateInput
   savingsGoals?: Prisma.SavingsGoalOrderByRelationAggregateInput
   gmailToken?: Prisma.GmailTokenOrderByWithRelationInput
+  emailPreference?: Prisma.EmailPreferenceOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -216,6 +218,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   budgets?: Prisma.BudgetListRelationFilter
   savingsGoals?: Prisma.SavingsGoalListRelationFilter
   gmailToken?: Prisma.XOR<Prisma.GmailTokenNullableScalarRelationFilter, Prisma.GmailTokenWhereInput> | null
+  emailPreference?: Prisma.XOR<Prisma.EmailPreferenceNullableScalarRelationFilter, Prisma.EmailPreferenceWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -251,6 +254,7 @@ export type UserCreateInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -264,6 +268,7 @@ export type UserUncheckedCreateInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalUncheckedCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenUncheckedCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -277,6 +282,7 @@ export type UserUpdateInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -290,6 +296,7 @@ export type UserUncheckedUpdateInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUncheckedUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUncheckedUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -423,6 +430,20 @@ export type UserUpdateOneRequiredWithoutGmailTokenNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGmailTokenInput, Prisma.UserUpdateWithoutGmailTokenInput>, Prisma.UserUncheckedUpdateWithoutGmailTokenInput>
 }
 
+export type UserCreateNestedOneWithoutEmailPreferenceInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmailPreferenceInput, Prisma.UserUncheckedCreateWithoutEmailPreferenceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmailPreferenceInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEmailPreferenceNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmailPreferenceInput, Prisma.UserUncheckedCreateWithoutEmailPreferenceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmailPreferenceInput
+  upsert?: Prisma.UserUpsertWithoutEmailPreferenceInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmailPreferenceInput, Prisma.UserUpdateWithoutEmailPreferenceInput>, Prisma.UserUncheckedUpdateWithoutEmailPreferenceInput>
+}
+
 export type UserCreateWithoutCategoriesInput = {
   id?: string
   email: string
@@ -433,6 +454,7 @@ export type UserCreateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -445,6 +467,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalUncheckedCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenUncheckedCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -473,6 +496,7 @@ export type UserUpdateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -485,6 +509,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUncheckedUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUncheckedUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -497,6 +522,7 @@ export type UserCreateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -509,6 +535,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalUncheckedCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenUncheckedCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -537,6 +564,7 @@ export type UserUpdateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -549,6 +577,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUncheckedUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUncheckedUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBudgetsInput = {
@@ -561,6 +590,7 @@ export type UserCreateWithoutBudgetsInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBudgetsInput = {
@@ -573,6 +603,7 @@ export type UserUncheckedCreateWithoutBudgetsInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalUncheckedCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenUncheckedCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBudgetsInput = {
@@ -601,6 +632,7 @@ export type UserUpdateWithoutBudgetsInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBudgetsInput = {
@@ -613,6 +645,7 @@ export type UserUncheckedUpdateWithoutBudgetsInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUncheckedUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUncheckedUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSavingsGoalsInput = {
@@ -625,6 +658,7 @@ export type UserCreateWithoutSavingsGoalsInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSavingsGoalsInput = {
@@ -637,6 +671,7 @@ export type UserUncheckedCreateWithoutSavingsGoalsInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   gmailToken?: Prisma.GmailTokenUncheckedCreateNestedOneWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSavingsGoalsInput = {
@@ -665,6 +700,7 @@ export type UserUpdateWithoutSavingsGoalsInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSavingsGoalsInput = {
@@ -677,6 +713,7 @@ export type UserUncheckedUpdateWithoutSavingsGoalsInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   gmailToken?: Prisma.GmailTokenUncheckedUpdateOneWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGmailTokenInput = {
@@ -689,6 +726,7 @@ export type UserCreateWithoutGmailTokenInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalCreateNestedManyWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGmailTokenInput = {
@@ -701,6 +739,7 @@ export type UserUncheckedCreateWithoutGmailTokenInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   savingsGoals?: Prisma.SavingsGoalUncheckedCreateNestedManyWithoutUserInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGmailTokenInput = {
@@ -729,6 +768,7 @@ export type UserUpdateWithoutGmailTokenInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUpdateManyWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGmailTokenInput = {
@@ -741,6 +781,75 @@ export type UserUncheckedUpdateWithoutGmailTokenInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   savingsGoals?: Prisma.SavingsGoalUncheckedUpdateManyWithoutUserNestedInput
+  emailPreference?: Prisma.EmailPreferenceUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutEmailPreferenceInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  createdAt?: Date | string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
+  savingsGoals?: Prisma.SavingsGoalCreateNestedManyWithoutUserInput
+  gmailToken?: Prisma.GmailTokenCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEmailPreferenceInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  createdAt?: Date | string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
+  savingsGoals?: Prisma.SavingsGoalUncheckedCreateNestedManyWithoutUserInput
+  gmailToken?: Prisma.GmailTokenUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEmailPreferenceInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmailPreferenceInput, Prisma.UserUncheckedCreateWithoutEmailPreferenceInput>
+}
+
+export type UserUpsertWithoutEmailPreferenceInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEmailPreferenceInput, Prisma.UserUncheckedUpdateWithoutEmailPreferenceInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmailPreferenceInput, Prisma.UserUncheckedCreateWithoutEmailPreferenceInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEmailPreferenceInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEmailPreferenceInput, Prisma.UserUncheckedUpdateWithoutEmailPreferenceInput>
+}
+
+export type UserUpdateWithoutEmailPreferenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
+  savingsGoals?: Prisma.SavingsGoalUpdateManyWithoutUserNestedInput
+  gmailToken?: Prisma.GmailTokenUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEmailPreferenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+  savingsGoals?: Prisma.SavingsGoalUncheckedUpdateManyWithoutUserNestedInput
+  gmailToken?: Prisma.GmailTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -812,6 +921,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   savingsGoals?: boolean | Prisma.User$savingsGoalsArgs<ExtArgs>
   gmailToken?: boolean | Prisma.User$gmailTokenArgs<ExtArgs>
+  emailPreference?: boolean | Prisma.User$emailPreferenceArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -846,6 +956,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   savingsGoals?: boolean | Prisma.User$savingsGoalsArgs<ExtArgs>
   gmailToken?: boolean | Prisma.User$gmailTokenArgs<ExtArgs>
+  emailPreference?: boolean | Prisma.User$emailPreferenceArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -859,6 +970,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     budgets: Prisma.$BudgetPayload<ExtArgs>[]
     savingsGoals: Prisma.$SavingsGoalPayload<ExtArgs>[]
     gmailToken: Prisma.$GmailTokenPayload<ExtArgs> | null
+    emailPreference: Prisma.$EmailPreferencePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1265,6 +1377,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   budgets<T extends Prisma.User$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   savingsGoals<T extends Prisma.User$savingsGoalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savingsGoalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavingsGoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   gmailToken<T extends Prisma.User$gmailTokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$gmailTokenArgs<ExtArgs>>): Prisma.Prisma__GmailTokenClient<runtime.Types.Result.GetResult<Prisma.$GmailTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  emailPreference<T extends Prisma.User$emailPreferenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailPreferenceArgs<ExtArgs>>): Prisma.Prisma__EmailPreferenceClient<runtime.Types.Result.GetResult<Prisma.$EmailPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1804,6 +1917,25 @@ export type User$gmailTokenArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.GmailTokenInclude<ExtArgs> | null
   where?: Prisma.GmailTokenWhereInput
+}
+
+/**
+ * User.emailPreference
+ */
+export type User$emailPreferenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmailPreference
+   */
+  select?: Prisma.EmailPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EmailPreference
+   */
+  omit?: Prisma.EmailPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmailPreferenceInclude<ExtArgs> | null
+  where?: Prisma.EmailPreferenceWhereInput
 }
 
 /**

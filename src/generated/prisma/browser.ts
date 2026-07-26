@@ -52,3 +52,8 @@ export type SavingsDeposit = Prisma.SavingsDepositModel
  * 
  */
 export type GmailToken = Prisma.GmailTokenModel
+/**
+ * Model EmailPreference
+ * 
+ */
+export type EmailPreference = Prisma.EmailPreferenceModel
