@@ -101,7 +101,7 @@ export default function LoginPage() {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full text-honey-50"
               size="lg"
               isLoading={isSubmitting}
             >
@@ -117,7 +117,7 @@ export default function LoginPage() {
             href="/register"
             className="text-honey-600 font-semibold hover:text-honey-500 transition-honey"
           >
-            Create one — it&apos;s free!
+            Register
           </Link>
         </p>
       </div>

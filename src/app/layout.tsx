@@ -22,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${nunito.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-display bg-cream text-hive-800">
+    <html lang="en" className={`${nunito.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-display bg-cream text-hive-800" suppressHydrationWarning>
         {children}
       </body>
     </html>

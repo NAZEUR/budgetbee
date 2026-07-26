@@ -126,7 +126,7 @@ export default function RegisterPage() {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full text-honey-50"
               size="lg"
               isLoading={isSubmitting}
             >
