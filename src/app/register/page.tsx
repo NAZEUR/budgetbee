@@ -48,7 +48,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 honeycomb-bg">
+    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4 honeycomb-bg">
       <div className="w-full max-w-md animate-slide-up">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -72,7 +72,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-3xl shadow-card p-8 border border-cream-darker">
+        <div className="bg-white rounded-3xl shadow-card p-6 sm:p-8 border border-cream-darker">
           <h2 className="text-xl font-bold text-hive-800 mb-6">
             Create Your Account
           </h2>

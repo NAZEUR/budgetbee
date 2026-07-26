@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -12,6 +15,8 @@ import {
   Receipt,
   Sparkles,
   ArrowUpRight,
+  Menu,
+  X,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/animated-reveal";
 import { FaqAccordion } from "@/components/ui/faq-accordion";
@@ -150,42 +155,100 @@ function SectionHeading({
 }
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-honey-200/60 transition-all">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <BrandLogo size={8} imageSize={22} className="group-hover:scale-105 transition-transform" />
-          <span className="text-xl font-extrabold tracking-tight text-hive-900">
-            Budget<span className="text-honey-500">Bee</span>
-          </span>
-        </Link>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <BrandLogo size={8} imageSize={22} className="group-hover:scale-105 transition-transform" />
+            <span className="text-xl font-extrabold tracking-tight text-hive-900">
+              Budget<span className="text-honey-500">Bee</span>
+            </span>
+          </Link>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-hive-600">
-          {NAV_LINKS.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="relative hover:text-honey-600 transition-colors after:absolute after:left-0 after:-bottom-1.5 after:h-0.5 after:w-0 after:bg-honey-400 after:transition-all hover:after:w-full"
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-hive-600">
+            {NAV_LINKS.map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="relative hover:text-honey-600 transition-colors after:absolute after:left-0 after:-bottom-1.5 after:h-0.5 after:w-0 after:bg-honey-400 after:transition-all hover:after:w-full"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/login"
+              className="px-4 py-2 text-sm font-semibold text-hive-700 hover:text-honey-600 hover:bg-honey-50 hover:font-bold rounded-xl transition-colors"
             >
-              {label}
-            </a>
-          ))}
-        </div>
+              Masuk
+            </Link>
+            <Link
+              href="/register"
+              className="px-4 py-2 text-sm font-bold bg-honey-100 text-honey-800 border border-honey-200/60 rounded-xl hover:bg-honey-200/80 hover:-translate-y-0.5 transition-all shadow-xs hover:shadow-sm flex items-center gap-1.5"
+            >
+              <span>Mulai Gratis</span>
+              <ArrowUpRight className="w-4 h-4 text-honey-600" />
+            </Link>
+          </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="px-4 py-2 text-sm font-semibold text-hive-700 hover:text-honey-600 hover:bg-honey-50 hover:font-bold rounded-xl transition-colors"
-          >
-            Masuk
-          </Link>
-          <Link
-            href="/register"
-            className="px-4 py-2 text-sm font-bold bg-honey-100 text-honey-800 border border-honey-200/60 rounded-xl hover:bg-honey-200/80 hover:-translate-y-0.5 transition-all shadow-xs hover:shadow-sm flex items-center gap-1.5"
-          >
-            <span>Mulai Gratis</span>
-            <ArrowUpRight className="w-4 h-4 text-honey-600" />
-          </Link>
+          {/* Hamburger Menu Icon for Mobile */}
+          <div className="flex md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-xl text-hive-600 hover:text-honey-600 hover:bg-honey-50 focus:outline-none transition-colors border border-transparent hover:border-honey-200/40"
+              aria-expanded={isOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {isOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu Panel */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out border-b border-honey-100 bg-white/95 backdrop-blur-md ${
+          isOpen ? "max-h-[350px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="px-4 pt-2 pb-6 space-y-4 shadow-inner">
+          <div className="flex flex-col gap-3">
+            {NAV_LINKS.map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-2 text-base font-semibold text-hive-600 hover:text-honey-600 hover:bg-honey-50 rounded-xl transition-all"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          <div className="h-px bg-honey-100 my-2" />
+
+          <div className="flex flex-col gap-2.5 px-3">
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="w-full text-center py-2.5 text-base font-semibold text-hive-700 hover:text-honey-600 hover:bg-honey-50 rounded-xl transition-all"
+            >
+              Masuk
+            </Link>
+            <Link
+              href="/register"
+              onClick={() => setIsOpen(false)}
+              className="w-full text-center py-2.5 text-base font-bold bg-honey-100 text-honey-800 border border-honey-200/60 rounded-xl hover:bg-honey-200/80 transition-all shadow-xs flex items-center justify-center gap-1.5"
+            >
+              <span>Mulai Gratis</span>
+              <ArrowUpRight className="w-4 h-4 text-honey-600" />
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
