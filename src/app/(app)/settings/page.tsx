@@ -448,9 +448,7 @@ export default function SettingsPage() {
             <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-50 border border-green-100">
               <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
               <p className="text-xs text-green-700 font-medium">
-                Email rekap aktif. Pastikan{" "}
-                <span className="font-bold">RESEND_API_KEY</span> sudah diisi di{" "}
-                <code className="bg-green-100 px-1 rounded">.env</code>
+                Email rekap aktif
               </p>
               {prefsSaved && (
                 <span className="ml-auto text-xs font-bold text-green-600">Tersimpan ✓</span>
