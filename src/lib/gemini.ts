@@ -117,24 +117,80 @@ export async function generateAiVisionResponse(
   mimeType: string,
   systemInstruction?: string
 ): Promise<string | null> {
-  const apiKey = (process.env.GEMINI_API_KEY || process.env.GROK_API_KEY || process.env.XAI_API_KEY)?.trim();
+  const apiKey = (process.env.GROK_API_KEY || process.env.XAI_API_KEY || process.env.GEMINI_API_KEY)?.trim();
   if (!apiKey) {
-    console.warn("No API key available for Gemini Vision");
+    console.warn("No API key available for Vision");
     return null;
   }
 
-  const isAuthKey = apiKey.startsWith("AQ.");
-  
   // Clean base64 string if it contains data uri prefix
   const base64Data = imageBase64.includes("base64,") ? imageBase64.split("base64,")[1] : imageBase64;
 
+  const isGeminiKey = apiKey.startsWith("AIzaSy") || apiKey.startsWith("AQ.");
+
+  if (!isGeminiKey) {
+    // Try Grok Vision API
+    try {
+      const url = "https://api.x.ai/v1/chat/completions";
+      const messages: any[] = [];
+      
+      if (systemInstruction) {
+        messages.push({ role: "system", content: systemInstruction });
+      }
+
+      messages.push({
+        role: "user",
+        content: [
+          { type: "text", text: prompt },
+          {
+            type: "image_url",
+            image_url: {
+              url: `data:${mimeType};base64,${base64Data}`,
+              detail: "high"
+            }
+          }
+        ]
+      });
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "grok-2-vision-1212", // Grok 2 Vision model
+          messages,
+          temperature: 0.1, // low temp for accurate parsing
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.choices?.[0]?.message?.content) {
+        console.log("Successfully generated content using Grok Vision API");
+        return data.choices[0].message.content as string;
+      } else {
+        console.warn("Grok Vision API error:", data.error || data);
+      }
+    } catch (error) {
+      console.error("Error calling Grok Vision API:", error);
+    }
+  }
+
+  // Fallback to Gemini API if Grok failed or if key is Gemini
+  const geminiKey = isGeminiKey ? apiKey : process.env.GEMINI_API_KEY?.trim();
+  if (!geminiKey) return null;
+
+  const isAuthKey = geminiKey.startsWith("AQ.");
   const apiVersions = ["v1beta", "v1"];
   const models = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemini-pro-vision"];
 
   for (const apiVersion of apiVersions) {
     for (const model of models) {
       try {
-        const url = `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent?key=${apiKey}`;
+        const url = isAuthKey 
+          ? `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent`
+          : `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent?key=${geminiKey}`;
 
         const payload: any = {
           contents: [
@@ -158,11 +214,12 @@ export async function generateAiVisionResponse(
 
         const headers: Record<string, string> = {
           "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
         };
 
         if (isAuthKey) {
-          headers["Authorization"] = `Bearer ${apiKey}`;
+          headers["Authorization"] = `Bearer ${geminiKey}`;
+        } else {
+          headers["x-goog-api-key"] = geminiKey;
         }
 
         const res = await fetch(url, {
