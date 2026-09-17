@@ -94,7 +94,7 @@ export function AiInsightsWidget() {
         <Button
           variant="ghost"
           size="sm"
-          onClick={fetchInsights}
+          onClick={() => fetchInsights()}
           isLoading={loading}
           className="text-hive-600 hover:text-hive-900"
         >
