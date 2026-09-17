@@ -31,9 +31,11 @@ import {
   Mail,
   Sparkles,
   FileText,
+  Camera,
 } from "lucide-react";
 import { AiQuickInputModal } from "@/components/transactions/ai-quick-input-modal";
 import { ExportReportModal } from "@/components/reports/export-report-modal";
+import { ScanReceiptModal } from "@/components/transactions/scan-receipt-modal";
 import { useLanguage } from "@/providers/language-provider";
 
 export default function TransactionsPage() {
@@ -50,6 +52,7 @@ export default function TransactionsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [isSyncingGmail, setIsSyncingGmail] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isScanModalOpen, setIsScanModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const handleSyncGmail = async () => {
@@ -211,8 +214,17 @@ export default function TransactionsPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setIsAiModalOpen(true)}
+            onClick={() => setIsScanModalOpen(true)}
             className="flex-1 sm:flex-initial justify-center border-honey-400 text-hive-900 bg-honey-100/50 hover:bg-honey-200/60 font-bold"
+          >
+            <Camera className="w-4 h-4 text-honey-600" />
+            Scan Receipt
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsAiModalOpen(true)}
+            className="flex-1 sm:flex-initial justify-center border-honey-400 text-hive-900 bg-honey-100/50 hover:bg-honey-200/60 font-bold hidden sm:flex"
           >
             <Sparkles className="w-4 h-4 text-honey-600 animate-pulse" />
             AI Quick Add
@@ -262,6 +274,12 @@ export default function TransactionsPage() {
       <AiQuickInputModal
         isOpen={isAiModalOpen}
         onClose={() => setIsAiModalOpen(false)}
+        onSuccess={() => fetchTransactions()}
+      />
+
+      <ScanReceiptModal
+        isOpen={isScanModalOpen}
+        onClose={() => setIsScanModalOpen(false)}
         onSuccess={() => fetchTransactions()}
       />
 

@@ -107,3 +107,76 @@ export async function generateAiResponse(
 
   return null;
 }
+
+/**
+ * Parses an image (receipt) using Gemini Vision
+ */
+export async function generateAiVisionResponse(
+  prompt: string,
+  imageBase64: string,
+  mimeType: string,
+  systemInstruction?: string
+): Promise<string | null> {
+  const apiKey = (process.env.GEMINI_API_KEY || process.env.GROK_API_KEY || process.env.XAI_API_KEY)?.trim();
+  if (!apiKey) {
+    console.warn("No API key available for Gemini Vision");
+    return null;
+  }
+
+  const isAuthKey = apiKey.startsWith("AQ.");
+  
+  // Clean base64 string if it contains data uri prefix
+  const base64Data = imageBase64.includes("base64,") ? imageBase64.split("base64,")[1] : imageBase64;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+  const payload: any = {
+    contents: [
+      {
+        parts: [
+          { text: prompt },
+          {
+            inlineData: {
+              mimeType: mimeType,
+              data: base64Data,
+            },
+          },
+        ],
+      },
+    ],
+  };
+
+  if (systemInstruction) {
+    payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+  }
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "x-goog-api-key": apiKey,
+  };
+
+  if (isAuthKey) {
+    headers["Authorization"] = `Bearer ${apiKey}`;
+  }
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+      console.log("Successfully generated content using Gemini Vision");
+      return data.candidates[0].content.parts[0].text as string;
+    } else {
+      console.error("Gemini Vision Error:", data);
+    }
+  } catch (error) {
+    console.error("Error calling Gemini Vision API:", error);
+  }
+
+  return null;
+}
