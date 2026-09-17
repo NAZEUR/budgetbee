@@ -19,8 +19,12 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
   const [mimeType, setMimeType] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
-  const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
+  
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [stream, setStream] = useState<MediaStream | null>(null);
 
   const [parsedData, setParsedData] = useState<{
     amount: number;
@@ -48,6 +52,52 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
       setParsedData(null);
     };
     reader.readAsDataURL(file);
+  };
+
+  const startCamera = async () => {
+    try {
+      setStatusMsg("");
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: "environment" } 
+      });
+      setStream(mediaStream);
+      setIsCameraActive(true);
+      // Wait for React to render the video element
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = mediaStream;
+          videoRef.current.play();
+        }
+      }, 100);
+    } catch (err) {
+      setStatusMsg("Gagal mengakses kamera. Pastikan Anda memberikan izin akses kamera.");
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    setIsCameraActive(false);
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+        setImagePreview(dataUrl);
+        setImageBase64(dataUrl);
+        setMimeType("image/jpeg");
+        stopCamera();
+      }
+    }
   };
 
   const handleParseReceipt = async () => {
@@ -112,9 +162,7 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
     setImageBase64(null);
     setParsedData(null);
     setStatusMsg("");
-    if (cameraInputRef.current) {
-      cameraInputRef.current.value = "";
-    }
+    stopCamera();
     if (galleryInputRef.current) {
       galleryInputRef.current.value = "";
     }
@@ -125,42 +173,58 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
     <Modal isOpen={isOpen} onClose={handleCloseModal} title="Scan Receipt" size="md">
       <div className="space-y-4">
         {!imagePreview ? (
-          <div className="flex flex-col items-center justify-center border-2 border-dashed border-honey-300 rounded-2xl p-8 bg-honey-50/50 hover:bg-honey-50 transition-colors">
-            <div className="w-16 h-16 rounded-full bg-honey-200/50 flex items-center justify-center mb-4">
-              <Camera className="w-8 h-8 text-honey-600" />
+          isCameraActive ? (
+            <div className="flex flex-col items-center justify-center space-y-4 animate-fade-in">
+              <div className="relative rounded-2xl overflow-hidden border-2 border-honey-300 w-full aspect-[3/4] sm:aspect-[4/3] bg-black">
+                <video 
+                  ref={videoRef} 
+                  className="w-full h-full object-cover" 
+                  playsInline 
+                  autoPlay 
+                  muted 
+                />
+                <canvas ref={canvasRef} className="hidden" />
+              </div>
+              <div className="flex gap-3 w-full">
+                <Button variant="outline" onClick={stopCamera} className="flex-1">
+                  Cancel
+                </Button>
+                <Button onClick={capturePhoto} className="flex-1">
+                  <Camera className="w-4 h-4 mr-2" />
+                  Snap!
+                </Button>
+              </div>
             </div>
-            <p className="text-sm font-semibold text-hive-800 text-center mb-1">
-              Take a photo or upload a receipt
-            </p>
-            <p className="text-xs text-hive-500 text-center mb-6 max-w-[250px]">
-              Our AI will automatically extract the total amount and merchant name.
-            </p>
-            <input
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="hidden"
-              ref={cameraInputRef}
-              onChange={handleFileChange}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              ref={galleryInputRef}
-              onChange={handleFileChange}
-            />
-            <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-              <Button onClick={() => cameraInputRef.current?.click()} className="flex-1">
-                <Camera className="w-4 h-4 mr-2" />
-                Take Photo
-              </Button>
-              <Button variant="outline" onClick={() => galleryInputRef.current?.click()} className="flex-1">
-                <Upload className="w-4 h-4 mr-2" />
-                Upload Image
-              </Button>
+          ) : (
+            <div className="flex flex-col items-center justify-center border-2 border-dashed border-honey-300 rounded-2xl p-8 bg-honey-50/50 hover:bg-honey-50 transition-colors">
+              <div className="w-16 h-16 rounded-full bg-honey-200/50 flex items-center justify-center mb-4">
+                <Camera className="w-8 h-8 text-honey-600" />
+              </div>
+              <p className="text-sm font-semibold text-hive-800 text-center mb-1">
+                Take a photo or upload a receipt
+              </p>
+              <p className="text-xs text-hive-500 text-center mb-6 max-w-[250px]">
+                Our AI will automatically extract the total amount and merchant name.
+              </p>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                ref={galleryInputRef}
+                onChange={handleFileChange}
+              />
+              <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+                <Button onClick={startCamera} className="flex-1">
+                  <Camera className="w-4 h-4 mr-2" />
+                  Take Photo
+                </Button>
+                <Button variant="outline" onClick={() => galleryInputRef.current?.click()} className="flex-1">
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload Image
+                </Button>
+              </div>
             </div>
-          </div>
+          )
         ) : (
           <div className="space-y-4 animate-fade-in">
             <div className="relative rounded-2xl overflow-hidden border-2 border-honey-200 bg-black/5 aspect-[3/4] sm:aspect-[4/3] flex items-center justify-center">
