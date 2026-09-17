@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Camera, Upload, CheckCircle2, X, Sparkles } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import Image from "next/image";
+import Tesseract from "tesseract.js";
 
 interface ScanReceiptModalProps {
   isOpen: boolean;
@@ -101,17 +102,33 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
   };
 
   const handleParseReceipt = async () => {
-    if (!imageBase64 || !mimeType) return;
+    if (!imageBase64) return;
     
     setLoading(true);
-    setStatusMsg("");
+    setStatusMsg("Mengekstrak teks dari struk (OCR)...");
     setParsedData(null);
 
     try {
+      // 1. Run Tesseract.js in the browser
+      const result = await Tesseract.recognize(
+        imageBase64,
+        'ind+eng', // Indonesian + English
+      );
+      
+      const extractedText = result.data.text;
+      
+      if (!extractedText || extractedText.trim().length < 5) {
+        setStatusMsg("Gagal membaca teks dari gambar. Pastikan struk terlihat jelas.");
+        setLoading(false);
+        return;
+      }
+
+      // 2. Send the extracted text to our Grok AI parser backend
+      setStatusMsg("Menganalisis data dengan AI...");
       const res = await fetch("/api/ai/parse-receipt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imageBase64, mimeType }),
+        body: JSON.stringify({ extractedText }),
       });
       
       const data = await res.json();
@@ -122,7 +139,7 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
         setStatusMsg(data.error || "Could not read the receipt clearly. Please try a better photo.");
       }
     } catch {
-      setStatusMsg("Error connecting to AI Vision. Please try again.");
+      setStatusMsg("Error connecting to AI. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { generateAiVisionResponse } from "@/lib/gemini";
+import { generateAiResponse } from "@/lib/gemini";
 
 export const maxDuration = 30; // 30 seconds for Vercel
 
@@ -13,10 +13,10 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { image, mimeType } = body;
+    const { extractedText } = body;
 
-    if (!image || !mimeType) {
-      return NextResponse.json({ error: "Image and mimeType are required" }, { status: 400 });
+    if (!extractedText) {
+      return NextResponse.json({ error: "extractedText is required" }, { status: 400 });
     }
 
     const categories = await prisma.category.findMany({
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const categoryListStr = categories.map((c) => `ID: "${c.id}" (Name: "${c.name}")`).join(", ");
 
     const systemInstruction = `Kamu adalah AI pengekstrak struk belanja (receipt parser).
-Tugasmu adalah membaca gambar struk dan mengekstrak total belanja, deskripsi merchant, dan mengkategorikannya.
+Tugasmu adalah membaca teks mentah hasil OCR (Optical Character Recognition) dari sebuah struk dan mengekstrak total belanja, deskripsi merchant, dan mengkategorikannya.
 Daftar Kategori User: [${categoryListStr}]
 
 Output WAJIB berupa JSON murni tanpa markdown wrapper atau penjelasan lain, dengan format persis:
@@ -44,10 +44,8 @@ Aturan:
 - "type" selalu "expense".
 - Pilih categoryId yang paling cocok dari daftar kategori di atas berdasarkan nama merchant atau item di struk. Jika tidak ada yang cocok, gunakan categoryId kategori "Lainnya" / "Other" / kategori pertama.`;
 
-    const aiResponse = await generateAiVisionResponse(
-      "Tolong baca struk ini dan ekstrak datanya.",
-      image,
-      mimeType,
+    const aiResponse = await generateAiResponse(
+      `Tolong analisis teks hasil OCR dari struk ini:\n\n"${extractedText}"\n\nAbaikan teks yang tidak terbaca dengan jelas (typo), cukup fokus cari Total Belanja dan Nama Tokonya.`,
       systemInstruction
     );
 
