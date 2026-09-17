@@ -53,10 +53,12 @@ Aturan:
 
     if (aiResponse) {
       try {
-        const cleanedJsonStr = aiResponse.replace(/```json|```/g, "").trim();
-        const parsed = JSON.parse(cleanedJsonStr);
-        if (parsed.amount && parsed.description) {
-          return NextResponse.json(parsed);
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          if (parsed.amount && parsed.description) {
+            return NextResponse.json(parsed);
+          }
         }
       } catch (err) {
         console.warn("Failed to parse Gemini Vision JSON output:", err);
