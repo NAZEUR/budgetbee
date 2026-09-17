@@ -17,6 +17,7 @@ import {
   Calendar,
   Clock,
   Languages,
+  XCircle,
 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { useLanguage } from "@/providers/language-provider";
@@ -90,6 +91,7 @@ export default function SettingsPage() {
   }>({ isConnected: false });
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
+  const [syncError, setSyncError] = useState(false);
 
   // Email Preferences state
   const [emailPrefs, setEmailPrefs] = useState({
@@ -142,6 +144,7 @@ export default function SettingsPage() {
   const handleSyncGmail = async () => {
     setIsSyncing(true);
     setSyncMessage("");
+    setSyncError(false);
     try {
       const res = await fetch("/api/integrations/gmail/sync", { method: "POST" });
       const data = await res.json();
@@ -150,9 +153,11 @@ export default function SettingsPage() {
         setGmailStatus((prev) => ({ ...prev, lastSyncedAt: new Date().toISOString() }));
       } else {
         setSyncMessage(data.error || t("generic.error"));
+        setSyncError(true);
       }
     } catch {
       setSyncMessage(t("generic.error"));
+      setSyncError(true);
     } finally {
       setIsSyncing(false);
     }
@@ -538,8 +543,18 @@ export default function SettingsPage() {
           </div>
 
           {syncMessage && (
-            <div className="p-3 rounded-xl bg-honey-50 border border-honey-200 text-sm font-medium text-hive-800 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-status-safe shrink-0" />
+            <div
+              className={`p-3 rounded-xl text-sm font-medium flex items-center gap-2 ${
+                syncError
+                  ? "bg-red-50 border border-red-200 text-red-700"
+                  : "bg-honey-50 border border-honey-200 text-hive-800"
+              }`}
+            >
+              {syncError ? (
+                <XCircle className="w-4 h-4 shrink-0" />
+              ) : (
+                <CheckCircle2 className="w-4 h-4 text-status-safe shrink-0" />
+              )}
               {syncMessage}
             </div>
           )}
