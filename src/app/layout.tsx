@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Track your expenses, build better habits, and watch your savings grow—one small step at a time. A personal budgeting app that makes managing money feel rewarding.",
   keywords: ["budgeting", "personal finance", "expense tracker", "savings goals"],
   verification: {
-    google: "kzHWVRSXMtIwP9TbaJ47hzQ4J_htmeqGBNFlSz_4EWQ",
+    google: process.env.GOOGLE_SITE_VERIFICATION || "",
   },
 };
 

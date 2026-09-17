@@ -122,7 +122,7 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleCloseModal} title="Scan Receipt 📸" size="md">
+    <Modal isOpen={isOpen} onClose={handleCloseModal} title="Scan Receipt" size="md">
       <div className="space-y-4">
         {!imagePreview ? (
           <div className="flex flex-col items-center justify-center border-2 border-dashed border-honey-300 rounded-2xl p-8 bg-honey-50/50 hover:bg-honey-50 transition-colors">
