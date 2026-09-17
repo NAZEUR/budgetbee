@@ -130,7 +130,7 @@ export async function generateAiVisionResponse(
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-  const payload: any = {
+  const payload = {
     contents: [
       {
         parts: [
@@ -141,9 +141,10 @@ export async function generateAiVisionResponse(
               data: base64Data,
             },
           },
-        ],
+        ] as any[],
       },
     ],
+    systemInstruction: undefined as any,
   };
 
   if (systemInstruction) {
