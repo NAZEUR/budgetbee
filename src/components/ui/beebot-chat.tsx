@@ -95,9 +95,9 @@ export function BeeBotChat() {
         {!isOpen && (
           <div
             onClick={() => setIsOpen(true)}
-            className="cursor-pointer bg-hive-900 text-cream font-bold text-xs px-3 py-1.5 rounded-2xl shadow-lg border border-honey-400/40 flex items-center gap-1.5 animate-bounce-subtle select-none hover:bg-hive-800 transition-colors"
+            className="cursor-pointer bg-hive-900 text-cream font-bold text-xs px-3 py-1.5 rounded-2xl shadow-lg border border-honey-400/40 flex items-center gap-1.5 select-none hover:bg-hive-800 transition-colors"
           >
-            <Sparkles className="w-3.5 h-3.5 text-honey-400 animate-pulse" />
+            <Sparkles className="w-3.5 h-3.5 text-honey-400" />
             <span>Tanya BeeBot AI! 🐝</span>
           </div>
         )}
@@ -105,7 +105,7 @@ export function BeeBotChat() {
         {/* Outer Pulsing Glow Ring on Yellow Circle */}
         <div className="relative">
           {!isOpen && (
-            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-honey-300 via-honey-400 to-honey-500 opacity-80 blur-sm animate-pulse" />
+            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-honey-300 via-honey-400 to-honey-500 opacity-80 blur-sm" />
           )}
 
           <button
@@ -116,7 +116,7 @@ export function BeeBotChat() {
             {isOpen ? (
               <X className="w-6 h-6 text-honey-400" />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-white p-1.5 flex items-center justify-center border-2 border-honey-400 shadow-inner animate-pulse">
+              <div className="w-10 h-10 rounded-full bg-white p-1.5 flex items-center justify-center border-2 border-honey-400 shadow-inner">
                 <Image
                   src="/logo_budgetbee.svg"
                   alt="BeeBot AI"
@@ -148,7 +148,7 @@ export function BeeBotChat() {
               <div>
                 <h3 className="font-extrabold text-white text-sm sm:text-base flex items-center gap-1.5">
                   BeeBot AI Assistant
-                  <Sparkles className="w-4 h-4 text-honey-400 animate-pulse" />
+                  <Sparkles className="w-4 h-4 text-honey-400" />
                 </h3>
                 <p className="text-[11px] text-honey-300 font-medium">Financial Mascot Advisor</p>
               </div>

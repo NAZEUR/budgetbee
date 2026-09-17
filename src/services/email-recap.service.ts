@@ -255,7 +255,7 @@ function emailBase(content: string, previewText: string): string {
                 <tr>
                   <td align="center">
                     <div style="display:inline-flex;align-items:center;gap:10px;">
-                      <span style="font-size:32px;">🐝</span>
+                      <img src="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/logo_budgetbee.svg" alt="BudgetBee" width="32" height="32" style="display:block;filter:brightness(0) invert(1);" />
                       <span style="font-size:24px;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">BudgetBee</span>
                     </div>
                     <p style="margin:8px 0 0;color:rgba(255,255,255,0.85);font-size:13px;font-weight:500;">Bee Smart with Your Money</p>
@@ -336,10 +336,10 @@ export function buildWeeklyRecapHtml(data: WeeklyRecapData): string {
   const content = `
     <div style="padding:32px 40px;">
       <!-- Greeting -->
-      <h1 style="margin:0 0 4px;font-size:22px;font-weight:900;color:#2C1810;">Rekap Mingguan 📋</h1>
+      <h1 style="margin:0 0 4px;font-size:22px;font-weight:900;color:#2C1810;">Rekap Mingguan</h1>
       <p style="margin:0 0 24px;color:#9B9284;font-size:14px;">Hai, <strong style="color:#4A3728;">${user.name}</strong>! Ini ringkasan keuanganmu untuk</p>
       <div style="background:linear-gradient(135deg,#FFF1D6,#FFE4A8);border-radius:12px;padding:10px 16px;display:inline-block;margin-bottom:28px;">
-        <span style="font-weight:700;color:#7A4F00;font-size:14px;">📅 ${weekRange}</span>
+        <span style="font-weight:700;color:#7A4F00;font-size:14px;">${weekRange}</span>
       </div>
 
       <!-- Stats -->
@@ -354,7 +354,7 @@ export function buildWeeklyRecapHtml(data: WeeklyRecapData): string {
       ${topCategories.length > 0 ? `
       <!-- Top Categories -->
       <div style="margin-bottom:28px;">
-        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">🏷️ Top Kategori Pengeluaran</h2>
+        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">Top Kategori Pengeluaran</h2>
         <table width="100%" cellpadding="0" cellspacing="0">
           ${categoriesHtml}
         </table>
@@ -363,7 +363,7 @@ export function buildWeeklyRecapHtml(data: WeeklyRecapData): string {
       ${biggestExpense ? `
       <!-- Biggest Expense -->
       <div style="background:#FFF8EE;border:1.5px solid #F5E6C8;border-radius:16px;padding:18px;margin-bottom:28px;">
-        <p style="margin:0 0 8px;font-size:12px;font-weight:700;color:#9B9284;text-transform:uppercase;letter-spacing:0.5px;">💳 Pengeluaran Terbesar</p>
+        <p style="margin:0 0 8px;font-size:12px;font-weight:700;color:#9B9284;text-transform:uppercase;letter-spacing:0.5px;">Pengeluaran Terbesar</p>
         <p style="margin:0;font-size:16px;font-weight:800;color:#2C1810;">${biggestExpense.description}</p>
         <p style="margin:4px 0 0;font-size:13px;color:#9B9284;">${biggestExpense.categoryName} &middot; <strong style="color:#E53E3E;">${formatCurrency(biggestExpense.amount)}</strong></p>
       </div>` : ""}
@@ -394,7 +394,7 @@ export function buildMonthlyRecapHtml(data: MonthlyRecapData): string {
           <td style="padding:8px 0;border-bottom:1px solid #F5E6C8;">
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td style="font-size:13px;font-weight:600;color:#4A3728;">${statusEmoji} ${b.categoryName}</td>
+                <td style="font-size:13px;font-weight:600;color:#4A3728;">${b.categoryName}</td>
                 <td style="text-align:right;">
                   <span style="font-size:12px;color:#9B9284;">${formatCurrency(b.spent)} / ${formatCurrency(b.limit)}</span>
                   <span style="margin-left:8px;background:${statusColor}20;color:${statusColor};font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;">${Math.round(b.percentage)}%</span>
@@ -430,10 +430,10 @@ export function buildMonthlyRecapHtml(data: MonthlyRecapData): string {
   const content = `
     <div style="padding:32px 40px;">
       <!-- Greeting -->
-      <h1 style="margin:0 0 4px;font-size:22px;font-weight:900;color:#2C1810;">Rekap Bulanan 📊</h1>
+      <h1 style="margin:0 0 4px;font-size:22px;font-weight:900;color:#2C1810;">Rekap Bulanan</h1>
       <p style="margin:0 0 24px;color:#9B9284;font-size:14px;">Hai, <strong style="color:#4A3728;">${user.name}</strong>! Berikut ringkasan keuanganmu di</p>
       <div style="background:linear-gradient(135deg,#FFF1D6,#FFE4A8);border-radius:12px;padding:10px 16px;display:inline-block;margin-bottom:28px;">
-        <span style="font-weight:700;color:#7A4F00;font-size:14px;">📅 ${monthLabel}</span>
+        <span style="font-weight:700;color:#7A4F00;font-size:14px;">${monthLabel}</span>
       </div>
 
       <!-- Stats -->
@@ -448,14 +448,14 @@ export function buildMonthlyRecapHtml(data: MonthlyRecapData): string {
       <!-- vs Last Month -->
       <div style="text-align:center;margin-bottom:28px;">
         <span style="background:${expenseDown ? "#F0FFF4" : "#FFF5F5"};color:${expenseDown ? "#38A169" : "#E53E3E"};font-size:12px;font-weight:700;padding:6px 14px;border-radius:99px;border:1.5px solid ${expenseDown ? "#C6F6D5" : "#FED7D7"};">
-          ${expenseDown ? "📉" : "📈"} Pengeluaran ${expenseDown ? "turun" : "naik"} ${Math.abs(Math.round(expenseChange))}% vs bulan lalu
+          Pengeluaran ${expenseDown ? "turun" : "naik"} ${Math.abs(Math.round(expenseChange))}% vs bulan lalu
         </span>
       </div>
 
       <!-- Category Breakdown -->
       ${categoryBreakdown.length > 0 ? `
       <div style="margin-bottom:28px;">
-        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">🏷️ Pengeluaran per Kategori</h2>
+        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">Pengeluaran per Kategori</h2>
         <table width="100%" cellpadding="0" cellspacing="0">
           ${categoriesHtml}
         </table>
@@ -464,7 +464,7 @@ export function buildMonthlyRecapHtml(data: MonthlyRecapData): string {
       <!-- Budget Status -->
       ${budgetStatus.length > 0 ? `
       <div style="margin-bottom:28px;">
-        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">🎯 Status Budget</h2>
+        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">Status Budget</h2>
         <table width="100%" cellpadding="0" cellspacing="0">
           ${budgetStatusHtml}
         </table>
@@ -472,7 +472,7 @@ export function buildMonthlyRecapHtml(data: MonthlyRecapData): string {
 
       <!-- Savings -->
       <div style="background:#FFF8EE;border:1.5px solid #F5E6C8;border-radius:16px;padding:20px;margin-bottom:28px;">
-        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">🍯 Progress Tabungan</h2>
+        <h2 style="margin:0 0 16px;font-size:15px;font-weight:800;color:#2C1810;text-transform:uppercase;letter-spacing:0.5px;">Progress Tabungan</h2>
         ${totalSavings > 0 ? `<p style="margin:0 0 12px;font-size:13px;color:#9B9284;">Total tabungan: <strong style="color:#F5A623;">${formatCurrency(totalSavings)}</strong></p>` : ""}
         <table width="100%" cellpadding="0" cellspacing="0">
           ${savingsHtml}

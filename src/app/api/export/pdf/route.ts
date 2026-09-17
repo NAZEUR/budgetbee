@@ -58,34 +58,36 @@ export async function GET(request: Request) {
 <head>
   <meta charset="UTF-8">
   <title>BudgetBee Monthly Financial Report - ${targetMonth}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     @media print {
       .no-print { display: none !important; }
-      body { background: white !important; color: black !important; }
+      body { background: white !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .container { box-shadow: none !important; border: none !important; padding: 0 !important; }
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
       padding: 40px;
-      background: #FFFBEA;
-      color: #2B2416;
+      background: #FFF8EE;
+      color: #2C1810;
     }
     .container {
       max-width: 850px;
       margin: 0 auto;
       background: white;
-      padding: 40px;
+      padding: 48px;
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      border: 1px solid #F5EFDC;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      border: 1px solid #F5E6C8;
     }
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid #F0B429;
-      padding-bottom: 20px;
-      margin-bottom: 30px;
+      border-bottom: 3px solid #F5A623;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
     }
     .brand {
       display: flex;
@@ -94,73 +96,86 @@ export async function GET(request: Request) {
     }
     .brand h1 {
       margin: 0;
-      font-size: 26px;
-      color: #1A1610;
+      font-size: 28px;
+      font-weight: 900;
+      color: #2C1810;
+      letter-spacing: -0.5px;
     }
-    .brand span { color: #F0B429; }
     .report-title {
       text-align: right;
     }
-    .report-title h2 { margin: 0; font-size: 20px; color: #1A1610; }
-    .report-title p { margin: 4px 0 0 0; font-size: 13px; color: #7A6F5B; }
+    .report-title h2 { margin: 0; font-size: 22px; font-weight: 800; color: #2C1810; }
+    .report-title p { margin: 4px 0 0 0; font-size: 14px; font-weight: 600; color: #9B9284; }
     
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
     }
     .card {
-      background: #FFFBEA;
-      padding: 16px;
+      background: #FFF8EE;
+      padding: 20px;
       border-radius: 16px;
-      border: 1px solid #F5EFDC;
+      border: 1px solid #F5E6C8;
     }
-    .card label { font-size: 11px; text-transform: uppercase; font-weight: bold; color: #7A6F5B; }
-    .card p { font-size: 18px; font-weight: 800; margin: 6px 0 0 0; color: #1A1610; }
+    .card label { font-size: 12px; text-transform: uppercase; font-weight: 800; color: #9B9284; letter-spacing: 0.5px; }
+    .card p { font-size: 20px; font-weight: 900; margin: 8px 0 0 0; color: #2C1810; }
 
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      font-size: 13px;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 16px;
+      font-size: 14px;
+      border: 1px solid #F5E6C8;
+      border-radius: 12px;
+      overflow: hidden;
     }
     th, td {
-      padding: 12px 16px;
+      padding: 14px 16px;
       text-align: left;
-      border-bottom: 1px solid #F5EFDC;
+      border-bottom: 1px solid #F5E6C8;
+    }
+    tr:last-child td {
+      border-bottom: none;
     }
     th {
-      background: #FFF8E1;
-      font-weight: bold;
-      color: #352F22;
+      background: #F5E6C8;
+      font-weight: 800;
+      color: #4A3728;
       text-transform: uppercase;
-      font-size: 11px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
     }
-    .type-expense { color: #F87171; font-weight: bold; }
-    .type-income { color: #34D399; font-weight: bold; }
+    td { font-weight: 600; color: #4A3728; }
+    .type-expense { color: #E53E3E; font-weight: 800; }
+    .type-income { color: #38A169; font-weight: 800; }
     
     .print-btn {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #F0B429;
-      color: #1A1610;
-      font-weight: bold;
+      background: linear-gradient(135deg, #F5A623, #E8901A);
+      color: #ffffff;
+      font-weight: 800;
       border: none;
-      padding: 14px 28px;
+      padding: 16px 32px;
       border-radius: 16px;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(240, 180, 41, 0.4);
+      box-shadow: 0 8px 24px rgba(240, 180, 41, 0.4);
       font-size: 15px;
+      transition: transform 0.2s;
     }
+    .print-btn:hover { transform: translateY(-2px); }
     .footer {
-      margin-top: 40px;
+      margin-top: 48px;
       text-align: center;
-      font-size: 12px;
-      color: #7A6F5B;
-      border-top: 1px solid #F5EFDC;
-      padding-top: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #9B9284;
+      border-top: 1px dashed #F5E6C8;
+      padding-top: 24px;
     }
   </style>
 </head>
@@ -168,11 +183,12 @@ export async function GET(request: Request) {
   <div class="container">
     <div class="header">
       <div class="brand">
-        <h1>Budget<span>Bee</span> 🐝</h1>
+        <img src="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/logo_budgetbee.svg" alt="BudgetBee Logo" width="36" height="36" />
+        <h1>BudgetBee</h1>
       </div>
       <div class="report-title">
         <h2>Financial Statement</h2>
-        <p>${getMonthDisplayName(targetMonth)} • User: ${user?.name || "User"}</p>
+        <p>${getMonthDisplayName(targetMonth)} &middot; User: ${user?.name || "User"}</p>
       </div>
     </div>
 
