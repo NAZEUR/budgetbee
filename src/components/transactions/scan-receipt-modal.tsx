@@ -19,7 +19,8 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
   const [mimeType, setMimeType] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
   const [parsedData, setParsedData] = useState<{
     amount: number;
@@ -111,8 +112,11 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
     setImageBase64(null);
     setParsedData(null);
     setStatusMsg("");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    if (cameraInputRef.current) {
+      cameraInputRef.current.value = "";
+    }
+    if (galleryInputRef.current) {
+      galleryInputRef.current.value = "";
     }
     onClose();
   };
@@ -136,13 +140,26 @@ export function ScanReceiptModal({ isOpen, onClose, onSuccess }: ScanReceiptModa
               accept="image/*"
               capture="environment"
               className="hidden"
-              ref={fileInputRef}
+              ref={cameraInputRef}
               onChange={handleFileChange}
             />
-            <Button onClick={() => fileInputRef.current?.click()} className="w-full sm:w-auto">
-              <Upload className="w-4 h-4 mr-2" />
-              Choose Image
-            </Button>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              ref={galleryInputRef}
+              onChange={handleFileChange}
+            />
+            <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+              <Button onClick={() => cameraInputRef.current?.click()} className="flex-1">
+                <Camera className="w-4 h-4 mr-2" />
+                Take Photo
+              </Button>
+              <Button variant="outline" onClick={() => galleryInputRef.current?.click()} className="flex-1">
+                <Upload className="w-4 h-4 mr-2" />
+                Upload Image
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="space-y-4 animate-fade-in">
