@@ -16,13 +16,14 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useLanguage } from "@/providers/language-provider";
 
 const navItems = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Transactions", href: "/transactions", icon: ArrowLeftRight },
-  { label: "Budget", href: "/budget", icon: Wallet },
-  { label: "Savings", href: "/savings", icon: PiggyBank },
-  { label: "Settings", href: "/settings", icon: Settings },
+  { labelKey: "nav.dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { labelKey: "nav.transactions", href: "/transactions", icon: ArrowLeftRight },
+  { labelKey: "nav.budget", href: "/budget", icon: Wallet },
+  { labelKey: "nav.savings", href: "/savings", icon: PiggyBank },
+  { labelKey: "nav.settings", href: "/settings", icon: Settings },
 ];
 
 interface SidebarProps {
@@ -32,6 +33,7 @@ interface SidebarProps {
 export function Sidebar({ userName }: SidebarProps) {
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <>
@@ -126,7 +128,7 @@ export function Sidebar({ userName }: SidebarProps) {
                       : "text-hive-300 group-hover:text-hive-500"
                   )}
                 />
-                {item.label}
+                {t(item.labelKey)}
                 {isActive && (
                   <div className="ml-auto w-1.5 h-1.5 rounded-full bg-honey-500" />
                 )}
@@ -152,7 +154,7 @@ export function Sidebar({ userName }: SidebarProps) {
             className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-hive-400 hover:bg-red-50 hover:text-status-danger transition-honey w-full"
           >
             <LogOut className="w-4 h-4" />
-            Sign Out
+            {t("nav.signOut")}
           </button>
         </div>
       </aside>

@@ -24,8 +24,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { budgetSchema, BudgetFormInput } from "@/lib/validators";
 import { Plus, ChevronLeft, ChevronRight, Trash2, Wallet } from "lucide-react";
+import { useLanguage } from "@/providers/language-provider";
 
 export default function BudgetPage() {
+  const { t } = useLanguage();
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -130,15 +132,15 @@ export default function BudgetPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
-            Budget
+            {t("budget.title")}
           </h1>
           <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
-            Set limits and keep your spending on track
+            {t("budget.subtitle")}
           </p>
         </div>
         <Button onClick={openModal} size="md" disabled={availableCategories.length === 0}>
           <Plus className="w-5 h-5" />
-          Set Budget
+          {t("budget.set")}
         </Button>
       </div>
 
@@ -169,7 +171,7 @@ export default function BudgetPage() {
               <Wallet className="w-6 h-6 text-honey-600" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-hive-400">Total Budget</p>
+              <p className="text-sm font-semibold text-hive-400">{t("budget.total")}</p>
               <p className="text-2xl font-extrabold text-hive-800">
                 {formatCurrency(totalSpent)}{" "}
                 <span className="text-base font-semibold text-hive-400">
@@ -186,7 +188,7 @@ export default function BudgetPage() {
                   : "danger"
               }
             >
-              {Math.round(getBudgetPercentage(totalSpent, totalBudget))}% used
+              {Math.round(getBudgetPercentage(totalSpent, totalBudget))}% {t("budget.used")}
             </Badge>
           </div>
           <ProgressBar
@@ -202,12 +204,12 @@ export default function BudgetPage() {
       {/* Budget Items */}
       {budgets.length === 0 ? (
         <EmptyState
-          title="No budgets set"
-          description="Set monthly budgets for your categories to keep track of your spending limits."
+          title={t("budget.noBudgets")}
+          description={t("budget.noBudgetsDesc")}
           action={
             <Button onClick={openModal}>
               <Plus className="w-4 h-4" />
-              Set Your First Budget
+              {t("budget.setFirst")}
             </Button>
           }
         />
@@ -239,7 +241,7 @@ export default function BudgetPage() {
                         {budget.category.name}
                       </p>
                       <p className="text-xs text-hive-400">
-                        {formatCurrency(remaining)} remaining
+                        {formatCurrency(remaining)} {t("budget.remaining")}
                       </p>
                     </div>
                   </div>
@@ -278,12 +280,12 @@ export default function BudgetPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Set Budget Limit"
+        title={t("budget.setLimit")}
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Select
             id="categoryId"
-            label="Category"
+            label={t("transactions.category")}
             placeholder="Select a category"
             options={availableCategories.map((c) => ({
               value: c.id,
@@ -295,7 +297,7 @@ export default function BudgetPage() {
 
           <Input
             id="monthlyLimit"
-            label="Monthly Limit"
+            label={t("budget.monthlyLimit")}
             type="number"
             step="any"
             placeholder="e.g. 500000"
@@ -312,10 +314,10 @@ export default function BudgetPage() {
               className="flex-1"
               onClick={() => setIsModalOpen(false)}
             >
-              Cancel
+              {t("generic.cancel")}
             </Button>
             <Button type="submit" className="flex-1" isLoading={isSubmitting}>
-              Set Budget
+              {t("budget.set")}
             </Button>
           </div>
         </form>

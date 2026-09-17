@@ -34,8 +34,10 @@ import {
 } from "lucide-react";
 import { AiQuickInputModal } from "@/components/transactions/ai-quick-input-modal";
 import { ExportReportModal } from "@/components/reports/export-report-modal";
+import { useLanguage } from "@/providers/language-provider";
 
 export default function TransactionsPage() {
+  const { t } = useLanguage();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +58,7 @@ export default function TransactionsPage() {
       const res = await fetch("/api/integrations/gmail/sync", { method: "POST" });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message || "Synced successfully!");
+        alert(data.message || t("generic.success"));
         fetchTransactions();
       } else {
         if (data.error?.includes("connect")) {
@@ -64,11 +66,11 @@ export default function TransactionsPage() {
             window.location.href = "/api/integrations/gmail/connect";
           }
         } else {
-          alert(data.error || "Failed to sync Gmail receipts.");
+          alert(data.error || t("generic.error"));
         }
       }
     } catch {
-      alert("Error syncing Gmail.");
+      alert(t("generic.error"));
     } finally {
       setIsSyncingGmail(false);
     }
@@ -184,7 +186,6 @@ export default function TransactionsPage() {
   const filteredCategoryOptions = categories
     .filter((c) => {
       const currentType = editingTransaction?.type;
-      // This is a simple heuristic - show all categories since types are flexible
       return true;
     })
     .map((c) => ({
@@ -200,10 +201,10 @@ export default function TransactionsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
-            Transactions
+            {t("transactions.title")}
           </h1>
           <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
-            Track every transaction and keep your money organized
+            {t("transactions.subtitle")}
           </p>
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -218,7 +219,7 @@ export default function TransactionsPage() {
           </Button>
           <Button onClick={openCreateModal} size="sm" className="flex-1 sm:flex-initial justify-center">
             <Plus className="w-4 h-4" />
-            Add Transaction
+            {t("transactions.add")}
           </Button>
         </div>
       </div>
@@ -253,7 +254,7 @@ export default function TransactionsPage() {
             className="px-2.5 sm:px-3 text-xs sm:text-sm"
           >
             <FileText className="w-4 h-4 text-hive-600" />
-            Export Report
+            {t("dashboard.exportReport")}
           </Button>
         </div>
       </div>
@@ -274,9 +275,9 @@ export default function TransactionsPage() {
         <Card className="animate-slide-down">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Select
-              label="Category"
+              label={t("transactions.category")}
               options={[
-                { value: "", label: "All Categories" },
+                { value: "", label: t("transactions.all") },
                 ...categories.map((c) => ({ value: c.id, label: c.name })),
               ]}
               value={filters.categoryId || ""}
@@ -288,11 +289,11 @@ export default function TransactionsPage() {
               }
             />
             <Select
-              label="Type"
+              label={t("transactions.type")}
               options={[
-                { value: "", label: "All Types" },
-                { value: "expense", label: "Expense" },
-                { value: "income", label: "Income" },
+                { value: "", label: t("transactions.all") },
+                { value: "expense", label: t("transactions.expense") },
+                { value: "income", label: t("transactions.income") },
               ]}
               value={filters.type || ""}
               onChange={(e) =>
@@ -343,12 +344,12 @@ export default function TransactionsPage() {
       {/* Transaction List */}
       {transactions.length === 0 ? (
         <EmptyState
-          title="No transactions yet"
+          title={t("dashboard.noTransactions")}
           description="Add your first transaction to begin tracking your money."
           action={
             <Button onClick={openCreateModal}>
               <Plus className="w-4 h-4" />
-              Add First Transaction
+              {t("transactions.add")}
             </Button>
           }
         />
@@ -382,7 +383,7 @@ export default function TransactionsPage() {
                       <Badge
                         variant={tx.type === "expense" ? "danger" : "safe"}
                       >
-                        {tx.type}
+                        {tx.type === "expense" ? t("transactions.expense") : t("transactions.income")}
                       </Badge>
                       <span className="text-xs text-hive-400">
                         {tx.category.name}
@@ -457,7 +458,7 @@ export default function TransactionsPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingTransaction ? "Edit Transaction" : "Add Transaction"}
+        title={editingTransaction ? t("generic.edit") : t("transactions.add")}
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
@@ -467,7 +468,7 @@ export default function TransactionsPage() {
               "border-cream-darker hover:border-hive-200"
             )}>
               <input type="radio" value="expense" {...register("type")} className="sr-only" />
-              <span className="text-sm font-semibold">Expense</span>
+              <span className="text-sm font-semibold">{t("transactions.expense")}</span>
             </label>
             <label className={cn(
               "flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-honey",
@@ -475,13 +476,13 @@ export default function TransactionsPage() {
               "border-cream-darker hover:border-hive-200"
             )}>
               <input type="radio" value="income" {...register("type")} className="sr-only" />
-              <span className="text-sm font-semibold">Income</span>
+              <span className="text-sm font-semibold">{t("transactions.income")}</span>
             </label>
           </div>
 
           <Input
             id="amount"
-            label="Amount"
+            label={t("transactions.amount")}
             type="number"
             step="any"
             placeholder="0"
@@ -499,7 +500,7 @@ export default function TransactionsPage() {
 
           <Select
             id="categoryId"
-            label="Category"
+            label={t("transactions.category")}
             placeholder="Select a category"
             options={filteredCategoryOptions}
             error={errors.categoryId?.message}
@@ -508,7 +509,7 @@ export default function TransactionsPage() {
 
           <Input
             id="date"
-            label="Date"
+            label={t("transactions.date")}
             type="date"
             error={errors.date?.message}
             {...register("date")}
@@ -521,10 +522,10 @@ export default function TransactionsPage() {
               className="flex-1"
               onClick={() => setIsModalOpen(false)}
             >
-              Cancel
+              {t("generic.cancel")}
             </Button>
             <Button type="submit" className="flex-1" isLoading={isSubmitting}>
-              {editingTransaction ? "Update" : "Add Transaction"}
+              {editingTransaction ? t("generic.save") : t("transactions.add")}
             </Button>
           </div>
         </form>
@@ -534,7 +535,7 @@ export default function TransactionsPage() {
       <Modal
         isOpen={!!deleteId}
         onClose={() => setDeleteId(null)}
-        title="Delete Transaction"
+        title={t("generic.delete")}
         size="sm"
       >
         <div className="text-center">
@@ -551,14 +552,14 @@ export default function TransactionsPage() {
               className="flex-1"
               onClick={() => setDeleteId(null)}
             >
-              Cancel
+              {t("generic.cancel")}
             </Button>
             <Button
               variant="danger"
               className="flex-1"
               onClick={handleDelete}
             >
-              Delete
+              {t("generic.delete")}
             </Button>
           </div>
         </div>

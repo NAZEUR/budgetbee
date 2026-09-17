@@ -11,24 +11,55 @@ export function AiInsightsWidget() {
   const [loading, setLoading] = useState(true);
   const [isAiGenerated, setIsAiGenerated] = useState(false);
 
-  const fetchInsights = async () => {
-    setLoading(true);
+  const fetchInsights = async (isBackground = false) => {
+    if (!isBackground) setLoading(true);
     try {
       const res = await fetch("/api/ai/insights");
       const data = await res.json();
       if (res.ok && Array.isArray(data.insights)) {
         setInsights(data.insights);
         setIsAiGenerated(!!data.isAiGenerated);
+        localStorage.setItem("budgetbee_insights", JSON.stringify({
+          insights: data.insights,
+          isAiGenerated: !!data.isAiGenerated,
+          timestamp: Date.now()
+        }));
       }
     } catch (err) {
       console.error("Failed to fetch AI insights:", err);
     } finally {
-      setLoading(false);
+      if (!isBackground) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchInsights();
+    const cached = localStorage.getItem("budgetbee_insights");
+    let hasValidCache = false;
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (parsed.insights && parsed.insights.length > 0) {
+          setInsights(parsed.insights);
+          setIsAiGenerated(parsed.isAiGenerated);
+          setLoading(false);
+          hasValidCache = true;
+        }
+      } catch (e) {
+        console.error("Failed to parse cached insights", e);
+      }
+    }
+
+    if (!hasValidCache) {
+      fetchInsights();
+    } else {
+      // Refresh in background if cache is older than 1 hour
+      try {
+        const parsed = JSON.parse(cached!);
+        if (Date.now() - parsed.timestamp > 60 * 60 * 1000) {
+          fetchInsights(true);
+        }
+      } catch (e) {}
+    }
   }, []);
 
   return (

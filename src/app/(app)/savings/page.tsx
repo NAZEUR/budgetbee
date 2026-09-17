@@ -29,8 +29,10 @@ import {
 } from "@/lib/validators";
 import { SAVINGS_ICONS, SAVINGS_COLORS } from "@/constants";
 import { Plus, Trash2, PlusCircle, Target } from "lucide-react";
+import { useLanguage } from "@/providers/language-provider";
 
 export default function SavingsPage() {
+  const { t } = useLanguage();
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [loading, setLoading] = useState(true);
   const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
@@ -163,15 +165,15 @@ export default function SavingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
-            Savings Goals
+            {t("savings.title")}
           </h1>
           <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
-            Build your savings, one deposit at a time
+            {t("savings.subtitle")}
           </p>
         </div>
         <Button onClick={() => openGoalModal()} size="md">
           <Plus className="w-5 h-5" />
-          New Goal
+          {t("savings.new")}
         </Button>
       </div>
 
@@ -183,7 +185,7 @@ export default function SavingsPage() {
               <Target className="w-6 h-6 text-honey-700" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-hive-400">Total Saved</p>
+              <p className="text-sm font-semibold text-hive-400">{t("savings.total")}</p>
               <p className="text-2xl font-extrabold text-hive-800">
                 {formatCurrency(totalSavings)}{" "}
                 <span className="text-base font-semibold text-hive-400">
@@ -192,7 +194,7 @@ export default function SavingsPage() {
               </p>
             </div>
             <Badge variant="honey">
-              {goals.length} goal{goals.length !== 1 ? "s" : ""}
+              {goals.length} {goals.length !== 1 ? t("savings.goals") : t("savings.goal")}
             </Badge>
           </div>
           <ProgressBar
@@ -208,12 +210,12 @@ export default function SavingsPage() {
       {/* Goals Grid */}
       {goals.length === 0 ? (
         <EmptyState
-          title="No savings goals yet"
-          description="Create your first savings goal and start building your savings! Every little bit counts."
+          title={t("savings.noGoals")}
+          description={t("savings.noGoalsDesc")}
           action={
             <Button onClick={() => openGoalModal()}>
               <Plus className="w-4 h-4" />
-              Create First Goal
+              {t("savings.createFirst")}
             </Button>
           }
         />
@@ -249,12 +251,12 @@ export default function SavingsPage() {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-base font-bold text-hive-800 truncate">
+                    <p className="text-base font-bold text-hive-800 truncate" onClick={() => openGoalModal(goal)} style={{ cursor: "pointer" }}>
                       {goal.name}
                     </p>
                     {goal.targetDate && (
                       <p className="text-xs text-hive-400">
-                        Target: {formatDate(goal.targetDate)}
+                        {t("savings.target")}: {formatDate(goal.targetDate)}
                       </p>
                     )}
                   </div>
@@ -283,11 +285,10 @@ export default function SavingsPage() {
                 {/* Status & Action */}
                 <div className="flex items-center justify-between pt-3 border-t border-cream-darker">
                   {isComplete ? (
-                    <Badge variant="safe">🎉 Goal Reached!</Badge>
+                    <Badge variant="safe">{t("savings.reached")}</Badge>
                   ) : (
                     <span className="text-xs text-hive-400">
-                      {formatCurrency(goal.targetAmount - goal.currentAmount)} to
-                      go
+                      {formatCurrency(goal.targetAmount - goal.currentAmount)} {t("savings.toGo")}
                     </span>
                   )}
                   <Button
@@ -296,7 +297,7 @@ export default function SavingsPage() {
                     onClick={() => openDepositModal(goal.id)}
                   >
                     <PlusCircle className="w-4 h-4" />
-                    Add Deposit
+                    {t("savings.addDeposit")}
                   </Button>
                 </div>
 
@@ -304,7 +305,7 @@ export default function SavingsPage() {
                 {goal.deposits && goal.deposits.length > 0 && (
                   <div className="mt-3 pt-3 border-t border-cream-darker">
                     <p className="text-xs font-semibold text-hive-400 mb-2">
-                      Recent Deposits
+                      {t("savings.recentDeposits")}
                     </p>
                     <div className="space-y-1.5">
                       {goal.deposits.slice(0, 3).map((deposit) => (
@@ -333,7 +334,7 @@ export default function SavingsPage() {
       <Modal
         isOpen={isGoalModalOpen}
         onClose={() => setIsGoalModalOpen(false)}
-        title={editingGoal ? "Edit Savings Goal" : "New Savings Goal"}
+        title={editingGoal ? t("savings.editGoal") : t("savings.newGoal")}
       >
         <form
           onSubmit={goalForm.handleSubmit(onGoalSubmit)}
@@ -341,7 +342,7 @@ export default function SavingsPage() {
         >
           <Input
             id="goalName"
-            label="Goal Name"
+            label={t("savings.goalName")}
             placeholder="e.g. Emergency Fund, Vacation"
             error={goalForm.formState.errors.name?.message}
             {...goalForm.register("name")}
@@ -349,7 +350,7 @@ export default function SavingsPage() {
 
           <Input
             id="targetAmount"
-            label="Target Amount"
+            label={t("savings.targetAmount")}
             type="number"
             step="any"
             placeholder="e.g. 5000000"
@@ -359,7 +360,7 @@ export default function SavingsPage() {
 
           <Input
             id="targetDate"
-            label="Target Date (Optional)"
+            label={t("savings.targetDate")}
             type="date"
             error={goalForm.formState.errors.targetDate?.message}
             {...goalForm.register("targetDate")}
@@ -368,7 +369,7 @@ export default function SavingsPage() {
           {/* Color Picker */}
           <div>
             <label className="block text-sm font-semibold text-hive-700 mb-2">
-              Color
+              {t("savings.color")}
             </label>
             <div className="flex flex-wrap gap-2">
               {SAVINGS_COLORS.map((color) => (
@@ -391,7 +392,7 @@ export default function SavingsPage() {
           {/* Icon Picker */}
           <div>
             <label className="block text-sm font-semibold text-hive-700 mb-2">
-              Icon
+              {t("savings.icon")}
             </label>
             <div className="flex flex-wrap gap-2">
               {SAVINGS_ICONS.map((icon) => (
@@ -419,14 +420,14 @@ export default function SavingsPage() {
               className="flex-1"
               onClick={() => setIsGoalModalOpen(false)}
             >
-              Cancel
+              {t("generic.cancel")}
             </Button>
             <Button
               type="submit"
               className="flex-1"
               isLoading={goalForm.formState.isSubmitting}
             >
-              {editingGoal ? "Update Goal" : "Create Goal"}
+              {editingGoal ? t("savings.updateGoal") : t("savings.createGoal")}
             </Button>
           </div>
         </form>
@@ -436,7 +437,7 @@ export default function SavingsPage() {
       <Modal
         isOpen={isDepositModalOpen}
         onClose={() => setIsDepositModalOpen(false)}
-        title="Add Deposit"
+        title={t("savings.addDeposit")}
         size="sm"
       >
         <form
@@ -445,7 +446,7 @@ export default function SavingsPage() {
         >
           <Input
             id="depositAmount"
-            label="Amount"
+            label={t("savings.amount")}
             type="number"
             step="any"
             placeholder="e.g. 100000"
@@ -455,14 +456,14 @@ export default function SavingsPage() {
 
           <Input
             id="depositNote"
-            label="Note (Optional)"
+            label={t("savings.note")}
             placeholder="e.g. Monthly deposit"
             {...depositForm.register("note")}
           />
 
           <Input
             id="depositDate"
-            label="Date"
+            label={t("transactions.date")}
             type="date"
             error={depositForm.formState.errors.date?.message}
             {...depositForm.register("date")}
@@ -475,14 +476,14 @@ export default function SavingsPage() {
               className="flex-1"
               onClick={() => setIsDepositModalOpen(false)}
             >
-              Cancel
+              {t("generic.cancel")}
             </Button>
             <Button
               type="submit"
               className="flex-1"
               isLoading={depositForm.formState.isSubmitting}
             >
-              Add Deposit
+              {t("savings.addDeposit")}
             </Button>
           </div>
         </form>
@@ -492,7 +493,7 @@ export default function SavingsPage() {
       <Modal
         isOpen={!!deleteId}
         onClose={() => setDeleteId(null)}
-        title="Delete Savings Goal"
+        title={t("savings.deleteTitle")}
         size="sm"
       >
         <div className="text-center">
@@ -500,8 +501,7 @@ export default function SavingsPage() {
             <Trash2 className="w-6 h-6 text-status-danger" />
           </div>
           <p className="text-sm text-hive-600 mb-6">
-            Are you sure you want to delete this savings goal? All deposits will
-            also be deleted. This cannot be undone.
+            {t("savings.deleteDesc")}
           </p>
           <div className="flex gap-3">
             <Button
@@ -509,14 +509,14 @@ export default function SavingsPage() {
               className="flex-1"
               onClick={() => setDeleteId(null)}
             >
-              Keep It
+              {t("savings.keepIt")}
             </Button>
             <Button
               variant="danger"
               className="flex-1"
               onClick={handleDelete}
             >
-              Delete Goal
+              {t("savings.deleteGoal")}
             </Button>
           </div>
         </div>

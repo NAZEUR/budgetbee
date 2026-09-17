@@ -45,8 +45,10 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { useLanguage } from "@/providers/language-provider";
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -74,7 +76,7 @@ export default function DashboardPage() {
   if (!data) {
     return (
       <EmptyState
-        title="Something went wrong"
+        title={t("generic.error")}
         description="We couldn't load your dashboard data. Please try again."
       />
     );
@@ -90,10 +92,10 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-hive-900 tracking-tight">
-            Dashboard
+            {t("dashboard.title")}
           </h1>
           <p className="text-sm sm:text-base text-hive-400 font-medium mt-1">
-            Here&apos;s your financial overview for this month
+            {t("dashboard.subtitle")}
           </p>
         </div>
         <Button
@@ -102,7 +104,7 @@ export default function DashboardPage() {
           onClick={() => setIsExportModalOpen(true)}
         >
           <FileText className="w-4 h-4" />
-          Export Report
+          {t("dashboard.exportReport")}
         </Button>
       </div>
 
@@ -121,7 +123,7 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-semibold text-hive-400 uppercase tracking-wide">
-                Expenses
+                {t("dashboard.expenses")}
               </p>
               <p className="text-2xl font-extrabold text-hive-800 mt-1">
                 {formatCurrency(data.totalExpenseThisMonth)}
@@ -141,7 +143,7 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-semibold text-hive-400 uppercase tracking-wide">
-                Income
+                {t("dashboard.income")}
               </p>
               <p className="text-2xl font-extrabold text-hive-800 mt-1">
                 {formatCurrency(data.totalIncomeThisMonth)}
@@ -161,7 +163,7 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-semibold text-hive-400 uppercase tracking-wide">
-                Budget Left
+                {t("dashboard.budgetLeft")}
               </p>
               <p className="text-2xl font-extrabold text-hive-800 mt-1">
                 {formatCurrency(Math.max(data.totalBudget - data.totalBudgetSpent, 0))}
@@ -194,7 +196,7 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-semibold text-hive-400 uppercase tracking-wide">
-                Total Savings
+                {t("dashboard.totalSavings")}
               </p>
               <p className="text-2xl font-extrabold text-hive-800 mt-1">
                 {formatCurrency(data.totalSavings)}
@@ -215,7 +217,7 @@ export default function DashboardPage() {
         {/* Pie Chart - Category Breakdown */}
         <Card>
           <h3 className="text-lg font-bold text-hive-800 mb-4">
-            Spending by Category
+            {t("dashboard.spendingByCategory")}
           </h3>
           {data.categoryBreakdown.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -223,7 +225,7 @@ export default function DashboardPage() {
                 <PieIcon className="w-6 h-6 text-honey-600" />
               </div>
               <p className="text-sm text-hive-400">
-                No expenses this month yet. Start tracking!
+                {t("dashboard.noExpenses")}
               </p>
             </div>
           ) : (
@@ -275,7 +277,7 @@ export default function DashboardPage() {
         {/* Bar Chart - Monthly Trend */}
         <Card>
           <h3 className="text-lg font-bold text-hive-800 mb-4">
-            Monthly Trend
+            {t("dashboard.monthlyTrend")}
           </h3>
           {data.monthlyTrend.every((m) => m.expense === 0 && m.income === 0) ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -283,7 +285,7 @@ export default function DashboardPage() {
                 <BarChart3 className="w-6 h-6 text-honey-600" />
               </div>
               <p className="text-sm text-hive-400">
-                No data yet. Add transactions to see trends!
+                {t("dashboard.noData")}
               </p>
             </div>
           ) : (
@@ -320,13 +322,13 @@ export default function DashboardPage() {
                 <Legend />
                 <Bar
                   dataKey="expense"
-                  name="Expense"
+                  name={t("dashboard.expenses")}
                   fill="#F87171"
                   radius={[6, 6, 0, 0]}
                 />
                 <Bar
                   dataKey="income"
-                  name="Income"
+                  name={t("dashboard.income")}
                   fill="#34D399"
                   radius={[6, 6, 0, 0]}
                 />
@@ -341,7 +343,7 @@ export default function DashboardPage() {
         {/* Savings Goals */}
         <Card>
           <h3 className="text-lg font-bold text-hive-800 mb-4">
-            Savings Goals
+            {t("dashboard.savingsGoals")}
           </h3>
           {data.savingsGoals.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center py-8">
@@ -349,7 +351,7 @@ export default function DashboardPage() {
                 <Target className="w-5 h-5 text-honey-600" />
               </div>
               <p className="text-sm text-hive-400">
-                No savings goals yet. Create one to start saving!
+                {t("dashboard.noSavings")}
               </p>
             </div>
           ) : (
@@ -402,7 +404,7 @@ export default function DashboardPage() {
         {/* Recent Transactions */}
         <Card>
           <h3 className="text-lg font-bold text-hive-800 mb-4">
-            Recent Transactions
+            {t("dashboard.recentTransactions")}
           </h3>
           {data.recentTransactions.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center py-8">
@@ -410,7 +412,7 @@ export default function DashboardPage() {
                 <Receipt className="w-5 h-5 text-honey-600" />
               </div>
               <p className="text-sm text-hive-400">
-                No transactions yet. Start buzzing!
+                {t("dashboard.noTransactions")}
               </p>
             </div>
           ) : (
